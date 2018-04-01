@@ -1,4 +1,11 @@
+
 # NearbyFrontend
+
+## TO GET STARTED
+After cloning the directory, run `npm install` from the root directory to install dependencies required
+If you install any more dependencies yourself, please do so by running `npm install *packagename* --save`
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 

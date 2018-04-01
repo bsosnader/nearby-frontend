@@ -1,0 +1,8 @@
+<h2 style="text-align:center">Events</h2>
+<ul class="list-group">
+  <li *ngFor="let event of events" class="list-group-item">
+    <span class="badge">{{event.title}}</span> {{event.description}}
+    <br>
+    <span class="badge">{{event.time | date:'short'}}</span>
+  </li>
+</ul>
