@@ -4,14 +4,15 @@ import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
-
+import { MessageService } from './message.service';
 import { Event } from './event';
 import { EVENTS } from './mock-events';
 
-private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com:8000/events/';
 
 @Injectable()
 export class EventService {
+
+  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/events/';
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }

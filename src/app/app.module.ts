@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { EventService } from './event.service';
+import { HttpClientModule} from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { MessageService } from './message.service';
 
 
 @NgModule({
@@ -13,9 +15,10 @@ import { EventListComponent } from './event-list/event-list.component';
     EventListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [EventService],
+  providers: [EventService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
