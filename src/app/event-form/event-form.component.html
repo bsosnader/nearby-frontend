@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>New Event</h1>
+    <form class='p-3' #newEventForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Event name</label>
+        <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input type="datetime-local" class="form-control" id="time" required [(ngModel)]="model.time" name="time" #time=ngModel>
+
+      </div>
+      <div class="form-group">
+        <label for="location">Location (will be a map in future)</label>
+        <input type="text" class="form-control" id="location" required [(ngModel)]="model.location" name="location">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" rows="3" [(ngModel)]="model.description" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="image">Image upload</label>
+        <input type="file" class="form-control-file" id="image" multiple (change)="getFiles($event)">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid">Submit</button>
+
+    </form>
+</div>

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { EventFormComponent } from './event-form/event-form.component'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor(private modalService: NgbModal) {}
+
   title = 'Nearby';
+
+  open() {
+    const modalRef = this.modalService.open(EventFormComponent);
+    modalRef.componentInstance.name = 'World';
+  }
 }
