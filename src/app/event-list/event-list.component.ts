@@ -15,15 +15,29 @@ import { of } from 'rxjs/observable/of';
 export class EventListComponent implements OnInit {
   events: Event[];
   location = {};
+  has_position = false;
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
-    this.getEvents({id:"this is a fake object"})
+    this.getEvents({id:"this is a fake object"});
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback,{maximumAge:60000, timeout:5000, enableHighAccuracy:true})
+      this.has_position = true;
+    }
   }
 
   getEvents(data: Object): void {
     this.eventService.getEvents(data)
         .subscribe(events => this.events = events);
+  }
+
+  setPosition(position) {
+     this.location = position.coords;
+     console.log(position.coords);
+  }
+
+  errorCallback(error: any) {
+    console.log(error);
   }
 
 
