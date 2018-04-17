@@ -9,13 +9,17 @@ import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { MessageService } from './message.service';
 import { EventFormComponent } from './event-form/event-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { NewAccountComponent } from './new-account/new-account.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EventListComponent,
-    EventFormComponent
+    EventFormComponent,
+    LoginFormComponent,
+    NewAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +29,6 @@ import { EventFormComponent } from './event-form/event-form.component';
   ],
   providers: [EventService, MessageService],
   bootstrap: [AppComponent],
-  entryComponents: [EventFormComponent]
+  entryComponents: [EventFormComponent, LoginFormComponent, NewAccountComponent]
 })
 export class AppModule { }

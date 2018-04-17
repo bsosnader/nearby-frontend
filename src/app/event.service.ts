@@ -21,7 +21,7 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(): Observable<Event[]> {
+  getEvents(data: Object): Observable<Event[]> {
     return this.http.get<Event[]>(this.eventUrl)
     .pipe(
       tap(events => this.log(`fetched events`)),

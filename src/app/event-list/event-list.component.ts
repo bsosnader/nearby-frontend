@@ -14,16 +14,17 @@ import { of } from 'rxjs/observable/of';
 
 export class EventListComponent implements OnInit {
   events: Event[];
-
+  location = {};
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
-    this.getEvents();
+    this.getEvents({id:"this is a fake object"})
   }
 
-  getEvents(): void {
-    this.eventService.getEvents()
+  getEvents(data: Object): void {
+    this.eventService.getEvents(data)
         .subscribe(events => this.events = events);
   }
+
 
 }
