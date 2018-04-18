@@ -19,9 +19,9 @@ export class EventListComponent implements OnInit {
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
-    this.getEvents({id:"this is a fake object"});
+    //this.getEvents({id:"this is a fake object"});
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback,{maximumAge:60000, timeout:5000, enableHighAccuracy:true})
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback,{maximumAge:60000, timeout:5000, enableHighAccuracy:false})
       this.has_position = true;
     }
   }
@@ -34,6 +34,8 @@ export class EventListComponent implements OnInit {
   setPosition(position) {
      this.location = position.coords;
      console.log(position.coords);
+     // basically we only get events when we have location, will have to send events with post and handle on backend
+     this.getEvents(position.coords);
   }
 
   errorCallback(error: any) {
