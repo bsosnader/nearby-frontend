@@ -12,7 +12,7 @@ import { EVENTS } from './mock-events';
 @Injectable()
 export class EventService {
 
-  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/events/';
+  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/event/list';
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
