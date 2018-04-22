@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { account } from '../account.interface';
+import { AuthenticationService } from '../authentication.service';
 @Component({
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
@@ -12,11 +13,16 @@ export class NewAccountComponent implements OnInit {
   ngOnInit() {
   }
   submitted = false;
-  constructor(){ }
+  constructor(private authenticationService: AuthenticationService){ }
 
   onSubmit() {
     this.submitted = true;
     console.log(this.model);
+    this.authenticationService.signup(this.model.email, this.model.password)
+            .subscribe(result => {
+                console.log(result);
+            });
+
   }
 
 }

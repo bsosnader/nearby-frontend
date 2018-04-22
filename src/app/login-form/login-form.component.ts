@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
                 if (result === true) {
                     // login successful
                     this.message = 'Login Success!'
-                    console.log(JSON.parse(localStorage.getItem('currentUser')))
+                    console.log(JSON.parse(localStorage.getItem('id_token')))
                 } else {
                     // login failed
                     this.message = 'Username or password is incorrect';
