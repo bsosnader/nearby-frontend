@@ -13,6 +13,8 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { NewAccountComponent } from './new-account/new-account.component';
 import { AuthenticationService } from './authentication.service';
+import { AppRoutingModule } from './/app-routing.module';
+import { EventDetailComponent } from './event-detail/event-detail.component';
 
 
 @NgModule({
@@ -21,14 +23,16 @@ import { AuthenticationService } from './authentication.service';
     EventListComponent,
     EventFormComponent,
     LoginFormComponent,
-    NewAccountComponent
+    NewAccountComponent,
+    EventDetailComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),
     FormsModule,
-    HttpModule
+    HttpModule,
+    AppRoutingModule
   ],
   providers: [EventService, MessageService, AuthenticationService],
   bootstrap: [AppComponent],

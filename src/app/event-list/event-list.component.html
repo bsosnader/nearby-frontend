@@ -1,6 +1,6 @@
 <ul class="list-group">
   <li *ngFor="let event of events" class="list-group-item">
-    <h4 class="mb-0">{{event.title}}</h4>
+    <h4 class="mb-0"><a [routerLink]="['/event', event.id]">{{event.title}}</a></h4>
     <span class="badge mt-0">{{event.time | date:'short'}}</span>
     <p>{{event.description}}</p>
   </li>

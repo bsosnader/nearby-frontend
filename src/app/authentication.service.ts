@@ -17,7 +17,7 @@ export class AuthenticationService {
         this.token = id_token && id_token.token;
     }
  
-    login(email: string, password: string): Observable<boolean> {
+    login(username: string, password: string): Observable<boolean> {
         let headers = new Headers({
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class AuthenticationService {
         let options = new RequestOptions({
           headers: headers
         });
-        return this.http.post(this.basePath + '/api-token-auth/', JSON.stringify({ email: email, password: password }), options)
+        return this.http.post(this.basePath + '/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
         .map((response: Response) => {
           // login successful if there's a jwt token in the response
           let token = response.json() && response.json().token;
@@ -35,7 +35,7 @@ export class AuthenticationService {
             this.token = token;
 
             // store username and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('id_token', token);
+            localStorage.setItem('id_token', JSON.stringify({ username: username, token: token }));
 
             // return true to indicate successful login
             return true;

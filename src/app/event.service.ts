@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { EVENTS } from './mock-events';
+// import { EVENTS } from './mock-events';
 
 
 @Injectable()
@@ -27,6 +27,10 @@ export class EventService {
       tap(events => this.log(`fetched events`)),
       catchError(this.handleError('getEvents', []))
     );
+  }
+
+  getEvent(id: string): Observable<Event> {
+    return this.http.get<Event>(this.eventUrl + '/' + id);
   }
 
   /**

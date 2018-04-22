@@ -10,10 +10,15 @@ export class LoginFormComponent implements OnInit {
 
   model: account = {email:'', password:''};
   message = ''
+  loggedIn = false;
   ngOnInit() {
   }
   submitted = false;
-  constructor(private authenticationService: AuthenticationService){ }
+  constructor(private authenticationService: AuthenticationService){
+    if(localStorage.getItem('id_token')) {
+      this.loggedIn = true;
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -23,6 +28,7 @@ export class LoginFormComponent implements OnInit {
                 if (result === true) {
                     // login successful
                     this.message = 'Login Success!'
+                    console.log(this.message);
                     console.log(JSON.parse(localStorage.getItem('id_token')))
                 } else {
                     // login failed
