@@ -1,18 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">    <img width="150" alt="Angular Logo" src="assets/img/Nearby.svg">
+  <a class="navbar-brand" href="">    <img width="150" alt="Angular Logo" src="assets/img/Nearby.svg">
 </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">List View<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" (click)="listview=true">List View</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Map View</a>
+        <a class="nav-link" (click)="listview=false">Map View</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -21,28 +21,41 @@
         <span class="oi oi-magnifying-glass" title="icon name" aria-hidden="true"></span>
         </button>
     </form>
-    <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="event_open()" type="button">
-      <span class="oi oi-plus" title="icon name" aria-hidden="true"></span>
+    <div *ngIf="loggedIn;else logged_out">
+      <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="event_open()" type="button">
+        <span class="oi oi-plus" title="icon name" aria-hidden="true"></span>
       </button>
+      <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="logout()" type="button">
+        Log Out
+      </button>
+    </div>
+    <ng-template #logged_out>
       <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="login_open()" type="button">
-        Log In
-        </button>
+          Log In
+      </button>
       <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="new_account_open()" type="button">
-        Sign Up
-        </button>
+          Sign Up
+      </button>
+    </ng-template>
   </div>
 </nav>
 
-<div style="text-align:center">
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-sm">
-    </div>
-    <div class="col-sm-8">
-      <app-event-list></app-event-list>
-    </div>
-    <div class="col-sm">
+<div *ngIf="listview">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm-8">
+        <!-- <app-event-list></app-event-list> -->
+        <router-outlet></router-outlet>
+      </div>
+      <div class="col-sm">
+      </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="listview==false">
+  <app-maps-view></app-maps-view>
 </div>
