@@ -11,7 +11,7 @@ export class AppComponent {
   constructor(private modalService: NgbModal) {}
 
   title = 'Nearby';
-
+  listview: boolean = true;
   open() {
     const modalRef = this.modalService.open(EventFormComponent);
     modalRef.componentInstance.name = 'World';
