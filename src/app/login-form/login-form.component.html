@@ -1,15 +1,19 @@
 <div class="container">
   <form class='p-3' #loginAccountForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="form-group row">
+    <div class="form-group row" [ngClass]="{
+        'has-danger': email.invalid && (email.dirty || email.touched),
+        'has-success': email.valid && (email.dirty || email.touched)}">
       <label for="email" class="col-sm-2 col-form-label">Email</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required [(ngModel)]="model.email">
+        <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Email" required [(ngModel)]="model.email" pattern="[^ @]*@[^ @]*">
       </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row" [ngClass]="{
+        'has-danger': password.invalid && (password.dirty || password.touched),
+        'has-success': password.valid && (password.dirty || password.touched)}">
       <label for="password" class="col-sm-2 col-form-label">Password</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required [(ngModel)]="model.password">
+        <input type="password" class="form-control" minlength="8" #password="ngModel" name="password" id="password" placeholder="Password" required [(ngModel)]="model.password">
       </div>
     </div>
     <div class="form-group row">
@@ -18,6 +22,14 @@
       </div>
     </div>
   </form>
-  {{this.message}}
+  <div class="form-control-feedback"
+       *ngIf="(email.errors && (email.dirty || email.touched))">
+    <p class="alert alert-warning" *ngIf="email.errors.pattern">Not a valid email!</p>
+  </div>
+  <div class="form-control-feedback"
+       *ngIf="(password.errors && (password.dirty || password.touched))">
+    <p class="alert alert-warning" *ngIf="password.errors.minlength">Password must be 8 characters</p>
+  </div>
+  <p *ngIf="message" class="alert alert-danger">{{message}}</p>
   <div *ngIf="loggedIn">You are already logged in!</div>
 </div>

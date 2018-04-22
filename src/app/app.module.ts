@@ -15,6 +15,7 @@ import { NewAccountComponent } from './new-account/new-account.component';
 import { AuthenticationService } from './authentication.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { EventDetailComponent } from './event-detail/event-detail.component';
+import { SharedServiceService } from './shared-service.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [EventService, MessageService, AuthenticationService],
+  providers: [EventService, MessageService, AuthenticationService, SharedServiceService],
   bootstrap: [AppComponent],
   entryComponents: [EventFormComponent, LoginFormComponent, NewAccountComponent]
 })

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { account } from '../account.interface';
 import { AuthenticationService } from '../authentication.service';
+import { SharedServiceService } from '../shared-service.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
@@ -14,7 +17,7 @@ export class LoginFormComponent implements OnInit {
   ngOnInit() {
   }
   submitted = false;
-  constructor(private authenticationService: AuthenticationService){
+  constructor(private authenticationService: AuthenticationService, private sharedService: SharedServiceService, public modal: NgbActiveModal){
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
@@ -22,18 +25,23 @@ export class LoginFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.model);
     this.authenticationService.login(this.model.email, this.model.password)
             .subscribe(result => {
                 if (result === true) {
                     // login successful
                     this.message = 'Login Success!'
                     console.log(this.message);
-                    console.log(JSON.parse(localStorage.getItem('id_token')))
+                    this.sharedService.emitLogin(true);
+                    this.modal.close();
                 } else {
                     // login failed
                     this.message = 'Username or password is incorrect';
+                    console.log(this.message);
+                    this.sharedService.emitLogin(false);
                 }
+            }, (error: any) =>{
+              this.message = 'Username or password is incorrect';
+              this.sharedService.emitLogin(false);
             });
 
   }

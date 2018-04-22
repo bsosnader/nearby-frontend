@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, HttpModule } from '@angular/http';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
-import {catchError, map, tap } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {catchError, map, tap, catch } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { of }         from 'rxjs/observable/of';
 
@@ -28,6 +29,7 @@ export class AuthenticationService {
         return this.http.post(this.basePath + '/api-token-auth/', JSON.stringify({ username: username, password: password }), options)
         .map((response: Response) => {
           // login successful if there's a jwt token in the response
+          console.log(response);
           let token = response.json() && response.json().token;
 
           if (token) {
@@ -41,7 +43,12 @@ export class AuthenticationService {
             return true;
           } else {
             // return false to indicate failed login
+            console.log("sad!");
             return false;
+          }
+        }).catch((error: any) =>{
+          if (error.status === 400) {
+            return Observable.throw(new Error(error.status));
           }
         });
     }
