@@ -6,13 +6,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { EVENTS } from './mock-events';
+// import { EVENTS } from './mock-events';
 
 
 @Injectable()
 export class EventService {
 
-  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/events/';
+  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/event/list';
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
@@ -21,12 +21,16 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(): Observable<Event[]> {
+  getEvents(data: Object): Observable<Event[]> {
     return this.http.get<Event[]>(this.eventUrl)
     .pipe(
       tap(events => this.log(`fetched events`)),
       catchError(this.handleError('getEvents', []))
     );
+  }
+
+  getEvent(id: string): Observable<Event> {
+    return this.http.get<Event>(this.eventUrl + '/' + id);
   }
 
   /**

@@ -6,5 +6,6 @@ export class Event {
   lng: number;
   user_email: string;
   time: Date;
-  comments: string[];
+  comments: Object;
+  upvote_count: number;
 }

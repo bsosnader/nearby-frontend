@@ -1,0 +1,9 @@
+<div *ngIf="event">
+  <div class="container">
+    <h3>{{event.title}}</h3>
+    <h6><small>Upvotes: {{event.upvote_count}}</small></h6>
+    <small>Time: {{event.time | date:'shortTime'}}</small>
+    <p>Location: {{event.location}}</p>
+    <p>Description: {{event.description}}</p>
+  </div>
+</div>
