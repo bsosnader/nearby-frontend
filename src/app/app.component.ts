@@ -49,6 +49,7 @@ export class AppComponent {
   logout() {
     this.authenticationService.logout();
     this.loggedIn = false;
+    this.sharedService.emitLogin(false);
   }
 
    toggleCollapsed(): void {

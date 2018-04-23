@@ -3,18 +3,16 @@
 	  	<div class="row">
 		  	<div class="col-sm-1">
 		  		<div class="row">
-		  			<button class="btn btn-outline-primary col" type="button">
+		  			<button class="btn btn-sm btn-outline-primary col mb-3" type="button" [disabled]="!loggedIn" (click)="upvote()">
 		  				<span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
 		  			</button>
 		  			</div>
-		  			<div class="row">
-		  			<button class="btn btn-outline-warning col" type="button">
-		  				<span class="oi oi-arrow-circle-bottom" title="upvote down" aria-hidden="true"></span>
-		  			</button>
-		  		</div>
+						<div class="row">
+							<p class="mx-auto text-primary">{{event.upvote_count}}</p>
+						</div>
 		  	</div>
 		  	<div class="col-sm-11">
-			    <h4 class="mb-0">{{event.title}}</h4>
+			    <h4 class="mb-0"><a [routerLink]="['/event', event.id]">{{event.title}}</a></h4>
 			    <span class="badge mt-0">{{event.time | date:'short'}}</span>
 			    <p>{{event.description}}</p>
 			</div>

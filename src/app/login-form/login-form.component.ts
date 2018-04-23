@@ -15,12 +15,16 @@ export class LoginFormComponent implements OnInit {
   message = ''
   loggedIn = false;
   ngOnInit() {
+    console.log("Help")
+    if(localStorage.getItem('id_token')) {
+      this.loggedIn = true;
+      this.sharedService.emitLogin(true);
+      console.log("help")
+    }
   }
   submitted = false;
   constructor(private authenticationService: AuthenticationService, private sharedService: SharedServiceService, public modal: NgbActiveModal){
-    if(localStorage.getItem('id_token')) {
-      this.loggedIn = true;
-    }
+
   }
 
   onSubmit() {

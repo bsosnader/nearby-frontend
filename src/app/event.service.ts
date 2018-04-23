@@ -12,7 +12,7 @@ import { Event } from './event';
 @Injectable()
 export class EventService {
 
-  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/event/list';
+  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
@@ -22,7 +22,7 @@ export class EventService {
   }
 
   getEvents(data: Object): Observable<Event[]> {
-    return this.http.get<Event[]>(this.eventUrl)
+    return this.http.get<Event[]>(this.eventUrl + 'event/list/')
     .pipe(
       tap(events => this.log(`fetched events`)),
       catchError(this.handleError('getEvents', []))
@@ -30,9 +30,14 @@ export class EventService {
   }
 
   getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(this.eventUrl + '/' + id);
+    return this.http.get<Event>(this.eventUrl + 'event/list/' + id);
   }
 
+  postUpvote(email: string, token: string): Observable<any> {
+    // TODO: implement this-- figure out how to set up token + headers to make it work for JWT
+    //return this.http.post<any>(this.eventUrl, email, options);
+    return new Observable<any>();
+  }
   /**
    * Handle Http operation that failed.
    * Let the app continue.
