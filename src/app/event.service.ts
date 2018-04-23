@@ -33,10 +33,13 @@ export class EventService {
     return this.http.get<Event>(this.eventUrl + 'event/list/' + id);
   }
 
-  postUpvote(email: string, token: string): Observable<any> {
+  postUpvote(email: string, event_id: string, token: string): Observable<any> {
     // TODO: implement this-- figure out how to set up token + headers to make it work for JWT
-    //return this.http.post<any>(this.eventUrl, email, options);
-    return new Observable<any>();
+    const body = JSON.stringify({user_email: email, event_id: event_id});
+    const headers = new HttpHeaders({'Content-Type':'application/json','Accept':'application/json', 'Authorization': 'JWT ' + token});
+    return this.http.post<any>(this.eventUrl + 'upvote', body, {headers: headers})
+      .pipe(catchError(this.handleError('postUpvote', [])));
+
   }
   /**
    * Handle Http operation that failed.
