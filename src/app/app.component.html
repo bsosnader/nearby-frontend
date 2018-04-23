@@ -16,10 +16,12 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-      <button class="btn btn-outline-success my-2 my-sm-0" type="button">
+      <input class="form-control mr-sm-2" type="search" #searchTerm placeholder="Search" (keyup.enter)="search(searchTerm)" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0 " (click)="search(searchTerm)" type="button">
         <span class="oi oi-magnifying-glass" title="icon name" aria-hidden="true"></span>
         </button>
+
+
     </form>
     <div *ngIf="loggedIn;else logged_out">
       <button class="btn btn-outline-success my-2 my-sm-0 ml-1" (click)="event_open()" type="button">

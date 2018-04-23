@@ -5,6 +5,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { NewAccountComponent } from './new-account/new-account.component';
 import { AuthenticationService } from './authentication.service';
 import { SharedServiceService } from './shared-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   listview: boolean = true;
 
 
-  constructor(private modalService: NgbModal, private authenticationService: AuthenticationService, private sharedService: SharedServiceService) {
+  constructor(private modalService: NgbModal, private authenticationService: AuthenticationService, private sharedService: SharedServiceService, private router: Router) {
     sharedService.onLogin$.subscribe(
       bool => {
         this.loggedIn = bool;
@@ -54,6 +55,12 @@ export class AppComponent {
 
    toggleCollapsed(): void {
      this.collapsed = !this.collapsed;
+   }
+
+   search(searchTerm: HTMLInputElement) {
+     console.log(`User searched for: ${searchTerm.value}`)
+     this.router.navigate(['list', {term: searchTerm.value}]);
+
    }
 
 

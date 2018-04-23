@@ -21,8 +21,11 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: Object): Observable<Event[]> {
-    return this.http.get<Event[]>(this.eventUrl + 'event/list/')
+  getEvents(data: Object, searchTerm?: string): Observable<Event[]> {
+    let url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list/';
+    url = encodeURI(url)
+    console.log(url)
+    return this.http.get<Event[]>(url)
     .pipe(
       tap(events => this.log(`fetched events`)),
       catchError(this.handleError('getEvents', []))

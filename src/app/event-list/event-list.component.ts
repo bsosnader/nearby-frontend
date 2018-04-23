@@ -3,6 +3,7 @@ import { Event } from '../event';
 import { EventService } from '../event.service';
 import { of } from 'rxjs/observable/of';
 import { SharedServiceService } from '../shared-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -19,15 +20,22 @@ export class EventListComponent implements OnInit {
   has_position = false;
   loggedIn = false;
   email: string;
-  constructor(private eventService: EventService, private sharedService: SharedServiceService) {
+  searchParam = '';
+  constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
       bool => {
         this.loggedIn = bool;
       });
+    this.route.params.subscribe(params => {
+      if (params['term']) {
+        this.getEvents({id:"this is a fake object"}, params['term']);
+      }
+    });
    }
 
   ngOnInit() {
-    this.getEvents({id:"this is a fake object"});
+      this.getEvents({id:"this is a fake object"})
+
     // if (navigator.geolocation) {
     //   navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback,{maximumAge:60000, timeout:5000, enableHighAccuracy:false})
     //   this.has_position = true;
@@ -37,8 +45,8 @@ export class EventListComponent implements OnInit {
     }
   }
 
-  getEvents(data: Object): void {
-    this.eventService.getEvents(data)
+  getEvents(data: Object, term?: string): void {
+    this.eventService.getEvents(data, term)
         .subscribe(events => this.events = events);
   }
 
@@ -46,6 +54,7 @@ export class EventListComponent implements OnInit {
     this.email = JSON.parse(localStorage.getItem('id_token')).username;
     console.log(this.email)
   }
+
   setPosition(position) {
      this.location = position.coords;
      console.log(position.coords);
