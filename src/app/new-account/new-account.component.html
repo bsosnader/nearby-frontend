@@ -30,4 +30,6 @@
        *ngIf="(password.errors && (password.dirty || password.touched))">
     <p class="alert alert-warning" *ngIf="password.errors.minlength">Password must be 8 characters</p>
   </div>
+  <p *ngIf="success_message" class="alert alert-success">{{success_message}}</p>
+  <p *ngIf="failure_message" class="alert alert-danger">{{failure_message}}</p>
 </div>
