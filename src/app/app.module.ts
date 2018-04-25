@@ -20,6 +20,7 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SharedServiceService } from './shared-service.service';
 
 import{KEY} from'./key';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import{KEY} from'./key';
     MapsViewComponent,
     LoginFormComponent,
     NewAccountComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,

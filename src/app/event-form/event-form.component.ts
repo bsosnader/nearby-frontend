@@ -9,7 +9,8 @@ import { EventService } from '../event.service';
 })
 export class EventFormComponent implements OnInit {
   date = new Date();
-  start_time, end_time;
+  start_time;
+  end_time;
   // that date thing is hacky!
   // this entire model is hacky i mean just look at those categories, beautiful
   model: newEvent = {title:'', location:'', time: this.date.toISOString().slice(0,-1), description:'', images: null, categories:''.split(','), isPlanned: false};
