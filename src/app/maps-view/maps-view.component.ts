@@ -18,8 +18,14 @@ export class MapsViewComponent implements OnInit {
     this.getEvents();
   }
   getEvents(): void {
-    //this.eventService.getEvents()
-    //    .subscribe(events => this.events = events);
-    this.events = EVENTS;
+    this.eventService.getEvents({})
+       .subscribe(events => {
+         this.events = events;
+         console.log(events);
+       });
+    //this.events = EVENTS;
+  }
+  convertString(value){
+    return parseFloat(value);
   }
 }

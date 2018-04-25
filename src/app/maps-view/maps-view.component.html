@@ -5,7 +5,7 @@
   </agm-info-window>
 </agm-marker>
 <div *ngFor="let event of events">
-  <agm-marker [latitude]="event.lat" [longitude]="event.lng">
+  <agm-marker [latitude]="convertString(event.lat)" [longitude]="convertString(event.long)">
     <agm-info-window [maxWidth]="200">
       <strong>{{event.title}}</strong><br/>
       <i>{{event.time}}</i>
