@@ -20,6 +20,7 @@ export class EventDetailComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       // In a real app: dispatch action to load the details here.
+      console.log(this.id)
       this.getEvent(String(this.id));
 
    });
@@ -27,9 +28,13 @@ export class EventDetailComponent implements OnInit {
   getEvent(id: string): void {
     this.eventService.getEvent(id)
       .subscribe(event => {
-        console.log(event[0]);
-        this.event = event[0];
+        console.log(event)
+        this.event = event;
       });
+  }
+
+  getVals(cats: any) {
+    return cats.map(a => a.title)
   }
 
 }
