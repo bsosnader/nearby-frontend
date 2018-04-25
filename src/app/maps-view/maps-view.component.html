@@ -1,0 +1,16 @@
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+<agm-marker [latitude]="lat" [longitude]="lng"[markerClickable]="true" [openInfoWindow]="true">
+  <agm-info-window>
+    <strong>You are here!</strong>
+  </agm-info-window>
+</agm-marker>
+<div *ngFor="let event of events">
+  <agm-marker [latitude]="convertString(event.lat)" [longitude]="convertString(event.long)">
+    <agm-info-window [maxWidth]="200">
+      <strong>{{event.title}}</strong><br/>
+      <i>{{event.time}}</i>
+      <p>{{event.description}}</p>
+    </agm-info-window>
+  </agm-marker>
+</div>
+</agm-map>

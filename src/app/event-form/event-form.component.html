@@ -1,0 +1,89 @@
+<div class="container">
+    <h1>New Event</h1>
+    <form class='p-3' #newEventForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Event name</label>
+        <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" name="plannedCheck" [(ngModel)]="model.isPlanned" type="checkbox" value="" id="plannedCheck">
+        <label class="form-check-label" for="plannedCheck">
+          Planned event (has start and end time)
+        </label>
+      </div>
+      <div class="form-group" *ngIf="model.isPlanned">
+        Start Time
+        <ngb-timepicker [(ngModel)]="start_time" name="timepicker_start" [meridian]="true"></ngb-timepicker>
+        End Time
+        <ngb-timepicker [(ngModel)]="end_time" name="timepicker_end" [meridian]="true"></ngb-timepicker>
+      </div>
+      <pre>Selected start and end time: {{start_time | json}} | {{end_time | json}}</pre>
+      <div class="form-group">
+        <label for="location">Location (Address)</label>
+        <input type="text" class="form-control" id="location" required [(ngModel)]="model.location" name="location">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" rows="3" [(ngModel)]="model.description" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="categories">Categories</label>
+        <select class="form-control" multiple [(ngModel)]="model.categories" name="categories">
+          <optgroup label="Athletics">
+            <option>Clubs</option>
+            <option>Varsity</option>
+            <option>Football</option>
+            <option>Soccer</option>
+            <option>Hockey</option>
+            <option>Volleyball</option>
+            <option>Basketball</option>
+            <option>Other Sport</option>
+          </optgroup>
+          <optgroup label="Food">
+            <option>Pizza</option>
+            <option>Dessert</option>
+            <option>Vegan</option>
+            <option>Vegetarian</option>
+            <option>Other Food</option>
+          </optgroup>
+          <optgroup label="Animals">
+            <option>Cats</option>
+            <option>Dogs</option>
+            <option>Other Animal</option>
+          </optgroup>
+          <optgroup label="Fundraising">
+            <option>Charity</option>
+            <option>Club</option>
+            <option>Nonprofit</option>
+          </optgroup>
+          <optgroup label="Professional">
+            <option>Information</option>
+            <option>Career Fair</option>
+            <option>Development</option>
+            <option>Resume Review</option>
+            <option>Interview Prep</option>
+          </optgroup>
+          <optgroup label="Music">
+            <option>Concert</option>
+            <option>Street performance</option>
+            <option>Restaurant performance</option>
+            <option>Alternative</option>
+            <option>Classic</option>
+            <option>Rock</option>
+            <option>Pop</option>
+            <option>Hip-Hop/Rap</option>
+            <option>Other Genre</option>
+          </optgroup>
+        </select>
+
+      </div>
+      <div class="form-group">
+        <label for="image">Image upload</label>
+        <input type="file" class="form-control-file" id="image" multiple (change)="getFiles($event)">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid">Submit</button>
+
+    </form>
+    <p *ngIf="badAddress" class="alert alert-danger">Invalid Address! Please try again.</p>
+
+</div>
