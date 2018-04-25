@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
 import { Event } from './event';
+import { KEY } from './key';
 // import { EVENTS } from './mock-events';
 
 
@@ -43,6 +44,16 @@ export class EventService {
     return this.http.post<any>(this.eventUrl + 'upvote', body, {headers: headers})
       .pipe(catchError(this.handleError('postUpvote', [])));
 
+  }
+
+  getLocFromAddr(addr: string): Observable<any> {
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + KEY;
+    url = encodeURI(url);
+    console.log(url);
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.handleError('getLocFromAddr',[]))
+      );
   }
   /**
    * Handle Http operation that failed.

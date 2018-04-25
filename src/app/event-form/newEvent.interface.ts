@@ -5,6 +5,8 @@ export interface newEvent {
   time: string;
   location: string; // there's probably a type for Location
   description: string;
+  categories: string[];
+  isPlanned: boolean;
   images: File[];
 
 }
