@@ -1,9 +1,10 @@
+<ngb-alert *ngIf="!notError" (close)="notError = true">You've already upvoted this post!</ngb-alert>
 <ul class="list-group">
-	  <li *ngFor="let event of events" class="list-group-item">
+	  <li *ngFor="let event of events; let i = index" class="list-group-item">
 	  	<div class="row">
 		  	<div class="col-sm-1">
 		  		<div class="row">
-		  			<button class="btn btn-sm btn-outline-primary col mb-3" type="button" [disabled]="!loggedIn" (click)="upvote()">
+		  			<button class="btn btn-sm btn-outline-primary col mb-3" type="button" [disabled]="!loggedIn" (click)="upvote(event.id, i)">
 		  				<span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
 		  			</button>
 		  			</div>

@@ -4,6 +4,8 @@ import { EventService } from '../event.service';
 import { of } from 'rxjs/observable/of';
 import { SharedServiceService } from '../shared-service.service';
 import { ActivatedRoute } from '@angular/router';
+import {Subject} from 'rxjs/Subject';
+import {debounceTime} from 'rxjs/operator/debounceTime';
 
 
 
@@ -20,7 +22,9 @@ export class EventListComponent implements OnInit {
   has_position = false;
   loggedIn = false;
   email: string;
+  token: string;
   searchParam = '';
+  notError = true;
   constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
       bool => {
@@ -43,6 +47,7 @@ export class EventListComponent implements OnInit {
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
+
   }
 
   getEvents(data: Object, term?: string): void {
@@ -50,9 +55,17 @@ export class EventListComponent implements OnInit {
         .subscribe(events => this.events = events);
   }
 
-  upvote() {
+  upvote(id: string, i: number) {
     this.email = JSON.parse(localStorage.getItem('id_token')).username;
-    console.log(this.email)
+    this.token = JSON.parse(localStorage.getItem('id_token')).token;
+    this.eventService.postUpvote(this.email, id, this.token)
+      .subscribe(res => {
+        this.events[i].upvote_count += 1;
+      }, error => {
+        this.notError = false;
+        setTimeout(() => this.notError = true, 5000);
+
+      });
   }
 
   setPosition(position) {

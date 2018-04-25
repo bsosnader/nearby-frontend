@@ -42,7 +42,6 @@ export class EventService {
     const body = JSON.stringify({user_email: email, event_id: event_id});
     const headers = new HttpHeaders({'Content-Type':'application/json','Accept':'application/json', 'Authorization': 'JWT ' + token});
     return this.http.post<any>(this.eventUrl + 'upvote', body, {headers: headers})
-      .pipe(catchError(this.handleError('postUpvote', [])));
 
   }
 
@@ -71,7 +70,7 @@ export class EventService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(error);
     };
   }
 
