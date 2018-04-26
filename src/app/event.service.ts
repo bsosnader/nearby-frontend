@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { MessageService } from './message.service';
 import { Event } from './event';
+import { newEvent } from './event-form/newEvent.interface';
 // import { EVENTS } from './mock-events';
 
 
@@ -23,7 +24,7 @@ export class EventService {
   }
 
   getEvents(data: Object, searchTerm?: string): Observable<Event[]> {
-    let url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list/';
+    let url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list';
     url = encodeURI(url)
     console.log(url)
     return this.http.get<Event[]>(url)
@@ -53,6 +54,12 @@ export class EventService {
       .pipe(
         catchError(this.handleError('getLocFromAddr',[]))
       );
+  }
+
+  postEvent(event: newEvent, token: string): Observable<any> {
+    const body = JSON.stringify(event);
+    const headers = new HttpHeaders({'Content-Type':'application/json', 'Accept':'application/json', 'Authorization': 'JWT ' + token});
+    return this.http.post<any>(this.eventUrl + 'event/create/', body, {headers: headers});
   }
   /**
    * Handle Http operation that failed.

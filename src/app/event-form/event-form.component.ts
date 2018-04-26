@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { newEvent } from './newEvent.interface'
 import { EventService } from '../event.service';
 import {FormControl} from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-event-form',
@@ -18,16 +22,14 @@ export class EventFormComponent implements OnInit {
   model: newEvent = {title:'',
                     description:'',
                     lat:'',
-                    long:'',
+                    lng:'',
                     zipcode:'',
                     user_email: JSON.parse(localStorage.getItem('id_token')).username,
-                    comments: [],
-                    upvote_count: 0,
-                    start_time: '',
-                    end_time: '',
+                    start_time: null,
+                    end_time: null,
                     categories: 'All'.split(',')};
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private router: Router, public modal: NgbActiveModal) { }
 
   ngOnInit() {
   }
@@ -86,8 +88,8 @@ export class EventFormComponent implements OnInit {
         console.log(loc);
         if(loc.status == "OK") {
           console.log(loc.results[0].geometry.location)
-          this.model.lat = String(loc.results[0].geometry.location.lat);
-          this.model.long = String(loc.results[0].geometry.location.lng);
+          this.model.lat = String(loc.results[0].geometry.location.lat).substring(0,10);
+          this.model.lng = String(loc.results[0].geometry.location.lng).substring(0,10);
           for(let comp of loc.results[0].address_components) {
             for(let type of comp.types) {
               if(type == "postal_code") {
@@ -96,7 +98,14 @@ export class EventFormComponent implements OnInit {
             }
           }
           // will do event post here
-
+          this.eventService.postEvent(this.model, JSON.parse(localStorage.getItem('id_token')).token)
+            .subscribe(res => {
+              console.log(res)
+              this.router.navigate(['event', res.id]);
+              this.modal.close();
+            }, error => {
+              console.error(error)
+            })
         } else {
           this.badAddress = true;
         }
