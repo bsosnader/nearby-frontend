@@ -3,16 +3,15 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
+import { environment } from 'environments/environment';
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { KEY } from './key';
 // import { EVENTS } from './mock-events';
 
 
 @Injectable()
 export class EventService {
-
+  private const KEY = environment.gmap_api_key;
   private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
 
   constructor(private http: HttpClient,

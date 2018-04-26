@@ -19,7 +19,8 @@ import { AppRoutingModule } from './/app-routing.module';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SharedServiceService } from './shared-service.service';
 
-import{KEY} from'./key';
+import { environment } from 'environments/environment';
+
 import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
@@ -39,7 +40,7 @@ import { FilterComponent } from './filter/filter.component';
     NgbModule.forRoot(),
     FormsModule,
     AgmCoreModule.forRoot({
-      apiKey: KEY
+      apiKey: environment.gmap_api_key
     }),
     HttpModule,
     AppRoutingModule
