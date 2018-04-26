@@ -57,8 +57,9 @@ export class EventListComponent implements OnInit {
 
   }
 
-  getEvents(data: Object, term?: string): void {
-    this.eventService.getEvents(data, term)
+  getEvents(data: Object, term?: string, cat?: boolean): void {
+    console.log("getEvents in list " + cat)
+    this.eventService.getEvents(data, term, cat)
         .subscribe(events => {
           this.events = events;
           console.log(this.events)
@@ -83,6 +84,10 @@ export class EventListComponent implements OnInit {
      console.log(position.coords);
      // basically we only get events when we have location, will have to send events with post and handle on backend
      //this.getEvents(position.coords);
+  }
+
+  onFiltered(categories: string) {
+    this.getEvents({id: "fake obj"}, categories, true);
   }
 
   errorCallback(error: any) {

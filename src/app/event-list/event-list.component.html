@@ -29,7 +29,7 @@
 				</ul>
 			</div>
       <div class="col-sm">
-        <app-filter></app-filter>
+        <app-filter (onFiltered)="onFiltered($event)"></app-filter>
       </div>
     </div>
   </div>

@@ -110,7 +110,7 @@ export class EventDetailComponent implements OnInit {
     this.eventService.postComment(comment_obj, this.token)
       .subscribe(res => {
         console.log(res);
-        this.getEvent(String(this.event.id);
+        this.getEvent(String(this.event.id));
       }, error => {
         console.error(error);
       });

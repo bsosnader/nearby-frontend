@@ -11,9 +11,9 @@
 
     <div class="form-check">
       <input class="form-check-input" type="checkbox" value=""
-      [(ngModel)]="model.Club" id="Club" name="Club">
-      <label class="form-check-label" for="Club">
-        Club
+      [(ngModel)]="model.Clubs" id="Club" name="Clubs">
+      <label class="form-check-label" for="Clubs">
+        Clubs
       </label>
     </div>
 
@@ -110,6 +110,30 @@
 
   <div class="form-check">
   <input class="form-check-input" type="checkbox" value=""
+      [(ngModel)]="model.Animals" id="Animals" name="Animals">
+    <label class="form-check-label" for="Animals">
+      Animals
+    </label>
+  </div>
+
+  <div class="ml-3" *ngIf="model.Animals">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Dogs" id="Dogs" name="Dogs">
+      <label class="form-check-label" for="Dogs">
+        Dogs
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Cats" id="Cats" name="Cats">
+      <label class="form-check-label" for="Cats">
+        Cats
+      </label>
+    </div>
+  </div>
+  <div class="form-check">
+  <input class="form-check-input" type="checkbox" value=""
       [(ngModel)]="model.Fundraising" id="Fundraising" name="Fundraising">
     <label class="form-check-label" for="Fundraising">
       Fundraising
@@ -118,18 +142,24 @@
 
   <div class="ml-3" *ngIf="model.Fundraising">
     <div class="form-check">
-    <input class="form-check-input" type="checkbox" value=""
-        [(ngModel)]="model.Animals" id="Animals" name="Animals">
-      <label class="form-check-label" for="Animals">
-        Animals
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Career_Fair" id="Career_Fair" name="Career_Fair">
+      <label class="form-check-label" for="Career_Fair">
+        Career Fair
       </label>
     </div>
-
     <div class="form-check">
-    <input class="form-check-input" type="checkbox" value=""
-        [(ngModel)]="model.Dogs" id="Dogs" name="Dogs">
-      <label class="form-check-label" for="Dogs">
-        Dogs
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Club" id="Club" name="Club">
+      <label class="form-check-label" for="Club">
+        Club
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Nonprofit" id="Nonprofit" name="Nonprofit">
+      <label class="form-check-label" for="Nonprofit">
+        Nonprofit
       </label>
     </div>
   </div>
@@ -184,4 +214,79 @@
       </label>
     </div>
   </div>
+
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value=""
+      [(ngModel)]="model.Music" id="Music" name="Music">
+    <label class="form-check-label" for="Music">
+      Music
+    </label>
+  </div>
+  <!-- // ["Athletics", "Food", "Animals", "Fundraiser", "Professional", "Music"]
+  //
+  //   ['Clubs', 'Varsity', 'Football', 'Soccer', 'Hockey', 'Volleyball', 'Basketball'],
+  //   ['Pizza', 'Dessert', 'Vegan', 'Vegetarian'],
+  //   ['Dogs', 'Cats'],
+  //   ['Charity', 'Club', 'Nonprofit'],
+  //   ['Information', 'Career Fair', 'Development', 'Resume Review', 'Interview Prep'],
+  //   ['Concerts', 'Street Performance', 'Alternative', 'Classic', 'Rock', 'Pop', 'Hip-Hop/Rap'] -->
+  <div class="ml-3" *ngIf="model.Music">
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Concerts" id="Concerts" name="Concerts">
+      <label class="form-check-label" for="Concerts">
+        Concerts
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Street_Performance" id="Street_Performance" name="Street_Performance">
+      <label class="form-check-label" for="Street_Performance">
+        Street Performance
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Alternative" id="Alternative" name="Alternative">
+      <label class="form-check-label" for="Alternative">
+        Alternative
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Classic" id="Classic" name="Classic">
+      <label class="form-check-label" for="Classic">
+        Classic
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Rock" id="Rock" name="Rock">
+      <label class="form-check-label" for="Rock">
+        Rock
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Pop" id="Pop" name="Pop">
+      <label class="form-check-label" for="Pop">
+        Pop
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value=""
+        [(ngModel)]="model.Hip_Hop_Rap" id="Hip_Hop_Rap" name="Hip_Hop_Rap">
+      <label class="form-check-label" for="Hip_Hop_Rap">
+        Hip-Hop/Rap
+      </label>
+    </div>
+  </div>
+  <button class="btn btn-outline-primary" (click)="doFilter()">
+    Filter
+  </button>
 </div>

@@ -23,8 +23,15 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: Object, searchTerm?: string): Observable<Event[]> {
-    let url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list';
+  getEvents(data: Object, searchTerm?: string, categories?: boolean): Observable<Event[]> {
+    console.log(categories)
+    console.log(searchTerm)
+    let url = ''
+    if(categories && searchTerm) {
+      url = this.eventUrl + 'event/list/?categories=' + searchTerm;
+    } else {
+      url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list';
+    }
     url = encodeURI(url)
     console.log(url)
     return this.http.get<Event[]>(url)
