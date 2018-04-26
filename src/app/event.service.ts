@@ -33,7 +33,7 @@ export class EventService {
   }
 
   getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(this.eventUrl + 'event/list/' + id);
+    return this.http.get<Event>(this.eventUrl + 'event/' + id + '/');
   }
 
   postUpvote(email: string, event_id: string, token: string): Observable<any> {
