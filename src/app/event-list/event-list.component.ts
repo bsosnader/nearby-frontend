@@ -29,6 +29,7 @@ export class EventListComponent implements OnInit {
   useFilter = false;
   askForZip = false;
   zipcode: string;
+  params;
   error_message = '';
   constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
@@ -37,8 +38,10 @@ export class EventListComponent implements OnInit {
       });
     this.route.params.subscribe(params => {
       if (params['term']) {
-        console.log(this.location)
-        this.getEvents(this.location, params['term']);
+        this.params = params['term'];
+        if (this.location.latitude) {
+          this.getEvents(this.location, params['term']);
+        }
       } else if (params['term'] == '') {
         this.getEvents(this.location)
       }
@@ -47,7 +50,6 @@ export class EventListComponent implements OnInit {
 
   ngOnInit() {
     //this.getEvents({id:"this is a fake object"})
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback.bind(this),{maximumAge:60000, timeout:5000, enableHighAccuracy:false})
       this.has_position = true;
@@ -62,7 +64,7 @@ export class EventListComponent implements OnInit {
 
   }
 
-  getEvents(data: Object, term?: string, cat?: boolean): void {
+  getEvents(data: Object, term?: string, cat?: string): void {
     this.eventService.getEvents(data, term, cat)
         .subscribe(events => {
           this.events = events;
@@ -93,11 +95,11 @@ export class EventListComponent implements OnInit {
      this.location = {latitude: String(x.latitude).substring(0,10), longitude: String(x.longitude).substring(0,10)};
      // basically we only get events when we have location, will have to send events with post and handle on backend
      //this.getEvents(position.coords);
-     this.getEvents(this.location)
+     this.getEvents(this.location, this.params)
   }
 
   onFiltered(categories: string) {
-    this.getEvents(this.location, categories, true);
+    this.getEvents(this.location, this.params, categories);
   }
 
   errorCallback(error: any) {
@@ -117,7 +119,7 @@ export class EventListComponent implements OnInit {
         this.location = { latitude:String(loc.results[0].geometry.location.lat).substring(0,10), longitude: String(loc.results[0].geometry.location.lng).substring(0,10) }
         this.askForZip = false;
         this.has_position = true;
-        this.getEvents(this.location)
+        this.getEvents(this.location, this.params)
       }
   });
 }

@@ -27,8 +27,7 @@ export class EventDetailComponent implements OnInit {
   loggedIn = false;
   comment_name: string;
   comment_comment: string;
-  uploader = new FileUploader({ url: 'https://nearbyapi.gq/image/upload',
-                                authToken: 'JWT ' + JSON.parse(localStorage.getItem('id_token')).token});
+  uploader = new FileUploader({ url: 'https://nearbyapi.gq/image/upload'});
 
 
 
@@ -94,7 +93,7 @@ export class EventDetailComponent implements OnInit {
   }
   uploadImage() {
     //this.uploader.queue[0].withCredentials = false //each item has its own value for this. It then gets bound to the XMLHttpRequest. It needs to be false or you'll get a Access-Control-Allow-Credentials error
-
+    this.uploader.authToken = 'JWT ' + JSON.parse(localStorage.getItem('id_token')).token
     this.uploader.uploadAll(); //alternatively you can use uploadAll
     this.uploader.onCompleteItem = (item, response, status, header) => {
       console.log(status)
