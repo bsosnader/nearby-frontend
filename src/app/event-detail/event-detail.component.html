@@ -30,19 +30,24 @@
             <agm-map [latitude]="lat" [longitude]="lng">
               <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
             </agm-map>
-            <div ng2FileDrop  [uploader]="uploader">
-              <input type="file" ng2FileSelect [uploader]="uploader"/>
-            <button class="btn btn-outline-primary" type="button" (click)="uploadImage()">
-                <span class="oi oi-plus" title="upload" aria-hidden="true"></span>
-            </button>
-            <div class="row">
-              <div class="col-sm-3" *ngFor="let url of event.event_images">
-                <img src="{{url.file}}" alt="event image">
+              <!-- <input type="file" class="bg-dark text-white" ng2FileSelect [uploader]="uploader"/> -->
+
+            <div class="row pt-2">
+              <div class="col-sm-3" style="width:100px;height:100px" *ngFor="let url of event.event_images">
+                <a href="{{url.file}}"><img src="{{url.file}}" alt="event image"></a>
               </div>
             </div>
+            <div *ngIf="loggedIn">
+              <button class="btn btn-outline-primary btn-file">
+                Add Image! <input id="fileSelectInput" type="file" hidden ng2FileSelect [uploader]="uploader">
+              </button>
+              <button class="btn btn-outline-primary" type="button" (click)="uploadImage()">
+                  <span class="oi oi-plus" title="upload" aria-hidden="true"></span>
+              </button>
+            </div>
           </div>
-        </div>
-          <form #commentForm="ngForm" (submit)="postComment()">
+          <form *ngIf='loggedIn' #commentForm="ngForm" (submit)="postComment()">
+          <h5>Add comment!</h5>
           <div class="form-row mb-5 " *ngIf="loggedIn">
             <div class="col">
               <input type="text" name="name" [(ngModel)]="comment_name" required class="form-control" placeholder="Display name">
@@ -54,7 +59,7 @@
           </div>
         </form>
           <div class="row pl-3">
-              <div class="col-sm-6 p-2" *ngFor="let comment of event.event_comment">
+              <div class="col-sm-6 bg-light rounded p-2 mb3" *ngFor="let comment of event.event_comment">
                 <div class="panel panel-default">
                 <div class="panel-heading">
                 <strong>{{comment.name}}</strong> <span class="text-muted">commented at {{comment.timestamp | date:'short'}}</span>

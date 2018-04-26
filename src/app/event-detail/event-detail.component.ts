@@ -93,14 +93,15 @@ export class EventDetailComponent implements OnInit {
       });
   }
   uploadImage() {
-    console.log('here')
     //this.uploader.queue[0].withCredentials = false //each item has its own value for this. It then gets bound to the XMLHttpRequest. It needs to be false or you'll get a Access-Control-Allow-Credentials error
 
     this.uploader.uploadAll(); //alternatively you can use uploadAll
     this.uploader.onCompleteItem = (item, response, status, header) => {
-      if (status === 200) {
+      console.log(status)
+      if (status == 201) {
         let data = JSON.parse(response);
         //save data.id, data.url, data.secret, etc
+        this.getEvent(String(this.event.id))
       }
     }
   }
