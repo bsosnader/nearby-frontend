@@ -11,13 +11,14 @@ import { EventService } from '../event.service';
 })
 export class EventDetailComponent implements OnInit {
   event: Event;
+  destination;//: {lng:number,lat:number};
   id: number;
   private sub: any;
   mode: string="WALKING";
   lat: number = 40.7959;
   lng: number = -77.8601;
   origin={ lat: 40.7959, lng: -77.8601 };
-  destination={ lat:40.797938, lng:-77.860283 };
+
   constructor(private route: ActivatedRoute, private eventService: EventService) { }
 
   ngOnInit() {
@@ -32,8 +33,15 @@ export class EventDetailComponent implements OnInit {
   getEvent(id: string): void {
     this.eventService.getEvent(id)
       .subscribe(event => {
-        console.log(event)
+        console.log(event);
         this.event = event;
+        console.log(this.destination)
+        this.destination = {lat:parseFloat(event.lat), lng:parseFloat(event.long)};
+        this.lat = (this.origin.lat+this.destination.lat)/2;
+        this.lng = (this.origin.lng+this.destination.lat)/2;
+        // console.log(this.destination);
+        // console.log(this.lat);
+        // console.log(this.lng);
       });
   }
 
