@@ -33,6 +33,8 @@ export class EventListComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params['term']) {
         this.getEvents({id:"this is a fake object"}, params['term']);
+      } else {
+        this.getEvents({id:"this is a fake object"})
       }
     });
    }

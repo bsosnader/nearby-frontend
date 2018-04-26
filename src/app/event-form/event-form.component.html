@@ -1,3 +1,17 @@
+<!-- // export interface newEvent {
+//   title: string; *
+//   description: string; *
+//   lat: string;
+//   long: string;
+//   zipcode: string;
+//   user_email: string; *
+//   comments: Object[]; *
+//   upvote_count: number; *
+//   start_time: Date(); *
+//   end_time: Date(); *
+//   categories: string[]; *
+//
+// } -->
 <div class="container">
     <h1>New Event</h1>
     <form class='p-3' #newEventForm="ngForm" (ngSubmit)="onSubmit()">
@@ -6,12 +20,12 @@
         <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
       </div>
       <div class="form-check">
-        <input class="form-check-input" name="plannedCheck" [(ngModel)]="model.isPlanned" type="checkbox" value="" id="plannedCheck">
+        <input class="form-check-input" name="plannedCheck" [(ngModel)]="isPlanned" type="checkbox" value="" id="plannedCheck">
         <label class="form-check-label" for="plannedCheck">
           Planned event (has start and end time)
         </label>
       </div>
-      <div class="form-group" *ngIf="model.isPlanned">
+      <div class="form-group" *ngIf="isPlanned">
         Start Time
         <ngb-timepicker [(ngModel)]="start_time" name="timepicker_start" [meridian]="true"></ngb-timepicker>
         End Time
@@ -20,7 +34,7 @@
       <pre>Selected start and end time: {{start_time | json}} | {{end_time | json}}</pre>
       <div class="form-group">
         <label for="location">Location (Address)</label>
-        <input type="text" class="form-control" id="location" required [(ngModel)]="model.location" name="location">
+        <input type="text" class="form-control" id="location" required [(ngModel)]="address" name="location">
       </div>
       <div class="form-group">
         <label for="description">Description</label>
@@ -77,10 +91,7 @@
         </select>
 
       </div>
-      <div class="form-group">
-        <label for="image">Image upload</label>
-        <input type="file" class="form-control-file" id="image" multiple (change)="getFiles($event)">
-      </div>
+
       <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid">Submit</button>
 
     </form>
