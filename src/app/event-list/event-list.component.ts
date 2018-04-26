@@ -31,8 +31,13 @@ export class EventListComponent implements OnInit {
   listview: boolean = true;
   useFilter = false;
   askForZip = false;
+  sortByAge = false;
+  sortByUp = false;
+  sortByProx = false;
   zipcode: string;
   params;
+  sort: string = '';
+  categories: string;
   error_message = '';
   constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
@@ -67,9 +72,9 @@ export class EventListComponent implements OnInit {
 
   }
 
-  getEvents(data: loc, term?: string, cat?: string): void {
+  getEvents(data: loc, term?: string, cat?: string, sort?: string): void {
     console.log(data)
-    this.eventService.getEvents(data, term, cat)
+    this.eventService.getEvents(data, term, cat, sort)
         .subscribe(events => {
           this.events = events;
           console.log(this.events)
@@ -103,6 +108,7 @@ export class EventListComponent implements OnInit {
   }
 
   onFiltered(categories: string) {
+    this.categories = categories;
     this.getEvents(this.location, this.params, categories);
   }
 
@@ -128,8 +134,18 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  onBadMapLoc(loc: boolean) {
-    this.errorCallback("bad loc");
+  doSort() {
+    if(this.sortByUp || this.sortByAge || this.sortByProx) {
+      this.sort = '';
+      if(this.sortByUp)  {
+        this.sort += '&popularity=1&age=0&proximity=0'
+      } else if(this.sortByAge) {
+        this.sort += '&popularity=0&age=1&proximity=0'
+      } else if(this.sortByProx) {
+        this.sort += '&popularity=0&age=0&proximity=1'
+      }
+      this.getEvents(this.location, this.params, this.categories, this.sort)
+    }
   }
 
 

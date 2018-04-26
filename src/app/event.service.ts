@@ -28,7 +28,7 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: loc, searchTerm?: string, categories?: string): Observable<Event[]> {
+  getEvents(data: loc, searchTerm?: string, categories?: string, sort?: string): Observable<Event[]> {
     let url = this.eventUrl + 'event/list/'
 
     if(data.latitude && data.longitude) {
@@ -47,6 +47,9 @@ export class EventService {
       } else if (categories) {
         url += '?categories=' + categories
       }
+    }
+    if (sort) {
+      url += sort;
     }
 
     url = encodeURI(url)

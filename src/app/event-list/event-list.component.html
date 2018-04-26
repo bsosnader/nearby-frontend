@@ -11,6 +11,25 @@
           </label>
         </div>
         <app-filter (onFiltered)="onFiltered($event)" *ngIf="useFilter"></app-filter>
+        <div class="form-check">
+          <input class="form-check-input" [disabled]="sortByUp || sortByProx" type="checkbox" value="" [(ngModel)]="sortByAge" id="sortByAge" name="sortByAge">
+          <label class="form-check-label" for="sortByAge">
+            Sort by age
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" [disabled]="sortByAge || sortByProx" [(ngModel)]="sortByUp" id="sortByUp" name="sortByUp">
+          <label class="form-check-label" for="sortByUp">
+            Sort by upvotes
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" [disabled]="sortByUp || sortByAge" [(ngModel)]="sortByProx" id="sortByProx" name="sortByProx">
+          <label class="form-check-label" for="sortByProx">
+            Sort by proximity
+          </label>
+        </div>
+        <button class="btn btn-outline-primary" (click)="doSort()">Sort</button>
       </div>
       <div class="col-sm-8">
         <form class="p-2" *ngIf="askForZip" #zipForm="ngForm" (submit)="getLocFromZip()">
