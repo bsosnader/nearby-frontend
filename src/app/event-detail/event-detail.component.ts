@@ -3,6 +3,8 @@ import { Event } from '../event';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../event.service';
 import { SharedServiceService } from '../shared-service.service';
+import { FileUploader } from 'ng2-file-upload';
+
 
 
 @Component({
@@ -25,6 +27,10 @@ export class EventDetailComponent implements OnInit {
   loggedIn = false;
   comment_name: string;
   comment_comment: string;
+  uploader = new FileUploader({ url: 'https://nearbyapi.gq/images/upload',
+                                authToken: JSON.parse(localStorage.getItem('id_token')).token});
+
+
 
   constructor(private route: ActivatedRoute, private eventService: EventService, private sharedService: SharedServiceService) {
     sharedService.onLogin$.subscribe(
@@ -44,7 +50,13 @@ export class EventDetailComponent implements OnInit {
    if(localStorage.getItem('id_token')) {
      this.loggedIn = true;
    }
-  }
+   if (this.loggedIn) {
+     this.uploader.onBuildItemForm = (item, form) => {
+       form.append("event_id", this.event.id);
+       form.append("user_email", JSON.parse(localStorage.getItem('id_token')).username);
+     };
+    }
+}
   getEvent(id: string): void {
     this.eventService.getEvent(id)
       .subscribe(event => {
@@ -64,27 +76,45 @@ export class EventDetailComponent implements OnInit {
   getVals(cats: any) {
     return cats.map(a => a.title)
   }
+
   upvote(id: string) {
     this.email = JSON.parse(localStorage.getItem('id_token')).username;
     this.token = JSON.parse(localStorage.getItem('id_token')).token;
     this.eventService.postUpvote(this.email, id, this.token)
       .subscribe(res => {
-        this.event.upvote_count += 1;
+        if (res.is_upvote) {
+          this.event.upvote_count += 1;
+        } else {
+          this.event.upvote_count -= 1;
+        }
       }, error => {
         this.notError = false;
         setTimeout(() => this.notError = true, 5000);
+      });
+  }
+  uploadImage() {
+    console.log('here')
+    //this.uploader.queue[0].withCredentials = false //each item has its own value for this. It then gets bound to the XMLHttpRequest. It needs to be false or you'll get a Access-Control-Allow-Credentials error
 
+    this.uploader.uploadAll(); //alternatively you can use uploadAll
+    this.uploader.onCompleteItem = (item, response, status, header) => {
+      if (status === 200) {
+        let data = JSON.parse(response);
+        //save data.id, data.url, data.secret, etc
+      }
+    }
+  }
+  postComment() {
+    let comment_obj = {name: this.comment_name, comment: this.comment_comment, event_id: this.event.id};
+    this.token = JSON.parse(localStorage.getItem('id_token')).token;
+    this.eventService.postComment(comment_obj, this.token)
+      .subscribe(res => {
+        console.log(res);
+        this.getEvent(String(this.event.id);
+      }, error => {
+        console.error(error);
       });
   }
 
-  postComment() {
-    let comment_obj = {name: this.comment_name, comment: this.comment_comment, event_id: this.event.id}
-    this.eventService.postComment(comment_obj, JSON.parse(localStorage.getItem('id_token')).token)
-      .subscribe(res => {
-        console.log(res)
-        this.getEvent(String(this.event.id)
-      }, error =>{
-        console.error(error)
-      })
-  }
+
 }

@@ -6,6 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { Http, HttpModule } from '@angular/http';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
@@ -47,7 +48,8 @@ import { FilterComponent } from './filter/filter.component';
     }),
     AgmDirectionModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FileUploadModule
   ],
   providers: [EventService, MessageService, AuthenticationService, SharedServiceService],
   bootstrap: [AppComponent],
