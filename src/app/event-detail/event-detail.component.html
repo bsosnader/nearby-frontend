@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-sm-1">
                   <div class="row">
-                    <button class="btn btn-sm btn-outline-primary col mb-3" type="button"  (click)="upvote(event.id)">
+                    <button class="btn btn-sm btn-outline-primary col mb-3" type="button"  [disabled]="!loggedIn" (click)="upvote(event.id)">
                       <span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
                     </button>
                     </div>
@@ -38,12 +38,12 @@
               </div>
             </div>
             <div *ngIf="loggedIn">
-              <button class="btn btn-outline-primary btn-file">
+              <label class="btn btn-outline-primary btn-file">
                 Add Image! <input id="fileSelectInput" type="file" hidden ng2FileSelect [uploader]="uploader">
-              </button>
-              <button class="btn btn-outline-primary" type="button" (click)="uploadImage()">
+              </label>
+              <label class="btn btn-outline-primary" type="button" (click)="uploadImage()">
                   <span class="oi oi-plus" title="upload" aria-hidden="true"></span>
-              </button>
+              </label>
             </div>
           </div>
           <form *ngIf='loggedIn' #commentForm="ngForm" (submit)="postComment()">
@@ -59,7 +59,7 @@
           </div>
         </form>
           <div class="row pl-3">
-              <div class="col-sm-6 bg-light rounded p-2 mb3" *ngFor="let comment of event.event_comment">
+              <div class="col-sm-5 bg-light rounded p-2 m-1" *ngFor="let comment of event.event_comment">
                 <div class="panel panel-default">
                 <div class="panel-heading">
                 <strong>{{comment.name}}</strong> <span class="text-muted">commented at {{comment.timestamp | date:'short'}}</span>

@@ -23,14 +23,19 @@ export class EventService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: Object, searchTerm?: string, categories?: boolean): Observable<Event[]> {
-    let url = ''
+  getEvents(data: Object, searchTerm?: string, categories?: string): Observable<Event[]> {
+    let url = this.eventUrl + 'event/list/'
     //if (data.latitude && data.longitude)
-    if(categories && searchTerm) {
-      url = this.eventUrl + 'event/list/?categories=' + searchTerm;
-    } else {
-      url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list';
+
+
+    if(searchTerm && categories) {
+      url += '?search=' + searchTerm + '&categories=' + categories;
+    } else if(searchTerm) {
+      url += '?search=' + searchTerm;
+    } else if (categories) {
+      url += '?categories=' + categories;
     }
+
     url = encodeURI(url)
     console.log(url)
     return this.http.get<Event[]>(url)
