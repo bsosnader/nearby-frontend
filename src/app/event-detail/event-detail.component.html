@@ -1,4 +1,3 @@
-<div>
   <div class="container">
     <div class="row">
       <div class="col-sm">
@@ -32,37 +31,27 @@
               <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
             </agm-map>
           </div>
-          <form>
+          <form #commentForm="ngForm" (submit)="postComment()">
           <div class="form-row mb-5 " *ngIf="loggedIn">
             <div class="col">
-              <input type="text" class="form-control" placeholder="Display name">
+              <input type="text" name="name" [(ngModel)]="comment_name" required class="form-control" placeholder="Display name">
             </div>
             <div class="col">
-              <input type="text" class="form-control" placeholder="comment">
+              <input type="text" name="comment" [(ngModel)]="comment_comment" required class="form-control" placeholder="comment">
             </div>
-            <button class="btn btn-outline-primary">Post Comment</button>
+            <button class="btn btn-outline-primary" [disabled]="!commentForm.form.valid" type="submit">Post Comment</button>
           </div>
         </form>
-          <div class="row">
-              <div class="col-sm-5">
-              <div class="panel panel-default">
-              <div class="panel-heading">
-              <strong>John H</strong> <span class="text-muted">commented</span>
-              </div>
-              <div class="panel-body">
-              Amazing!
-              </div><!-- /panel-body -->
-              </div><!-- /panel panel-default -->
-              </div><!-- /col-sm-5 -->
-              <div class="col-sm-5">
-              <div class="panel panel-default">
-              <div class="panel-heading">
-              <strong>Rob</strong> <span class="text-muted">commented</span>
-              </div>
-              <div class="panel-body">
-              They were out of thin mints when I went :(
-              </div><!-- /panel-body -->
-              </div><!-- /panel panel-default -->
+          <div class="row pl-3">
+              <div class="col-sm-6 p-2" *ngFor="let comment of event.event_comment">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong>{{comment.name}}</strong> <span class="text-muted">commented at {{comment.timestamp | date:'short'}}</span>
+                </div>
+                <div class="panel-body">
+                {{comment.comment}}
+                </div><!-- /panel-body -->
+                </div><!-- /panel panel-default -->
               </div><!-- /col-sm-5 -->
           </div>
         </div>

@@ -23,6 +23,8 @@ export class EventDetailComponent implements OnInit {
   token: string;
   notError = true;
   loggedIn = false;
+  comment_name: string;
+  comment_comment: string;
 
   constructor(private route: ActivatedRoute, private eventService: EventService, private sharedService: SharedServiceService) {
     sharedService.onLogin$.subscribe(
@@ -73,5 +75,16 @@ export class EventDetailComponent implements OnInit {
         setTimeout(() => this.notError = true, 5000);
 
       });
+  }
+
+  postComment() {
+    let comment_obj = {name: this.comment_name, comment: this.comment_comment, event_id: this.event.id}
+    this.eventService.postComment(comment_obj, JSON.parse(localStorage.getItem('id_token')).token)
+      .subscribe(res => {
+        console.log(res)
+        this.getEvent(String(this.event.id)
+      }, error =>{
+        console.error(error)
+      })
   }
 }

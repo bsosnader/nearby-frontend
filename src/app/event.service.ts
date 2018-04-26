@@ -61,6 +61,12 @@ export class EventService {
     const headers = new HttpHeaders({'Content-Type':'application/json', 'Accept':'application/json', 'Authorization': 'JWT ' + token});
     return this.http.post<any>(this.eventUrl + 'event/create/', body, {headers: headers});
   }
+
+  postComment(comment_obj: Object, token: string) {
+    const body = JSON.stringify(comment_obj);
+    const headers = new HttpHeaders({'Content-Type':'application/json', 'Accept':'application/json', 'Authorization': 'JWT ' + token});
+    return this.http.post<any>(this.eventUrl + 'comment/create', body, {headers: headers});
+  }
   /**
    * Handle Http operation that failed.
    * Let the app continue.
