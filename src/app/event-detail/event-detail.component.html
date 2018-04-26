@@ -1,9 +1,80 @@
-<div *ngIf="event">
   <div class="container">
-    <h3>{{event.title}}</h3>
-    <h6><small>Upvotes: {{event.upvote_count}}</small></h6>
-    <small>Time: {{event.time | date:'shortTime'}}</small>
-    <p>Location: {{event.location}}</p>
-    <p>Description: {{event.description}}</p>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm-8">
+        <div *ngIf="event">
+          <div class="container">
+            <ngb-alert *ngIf="!notError" (close)="notError = true">There was an error upvoting :(</ngb-alert>
+            <div class='jumbotron pt-3 mt-3'>
+              <div class="row">
+                <div class="col-sm-11">
+                  <h1>{{event.title}}</h1>
+                  <small>Post Time: {{event.time_stamp | date:'shortTime'}}</small>
+                  <p class='lead'>{{event.description}}</p>
+                  <small *ngIf="event.start_time">Duration: {{event.start_time | date:'shortTime'}}-{{event.end_time | date:'shortTime'}}</small>
+                  <br>
+                  <small>tags: {{getVals(event.categories)}}</small>
+                </div>
+                <div class="col-sm-1">
+                  <div class="row">
+                    <button class="btn btn-sm btn-outline-primary col mb-3" type="button"  [disabled]="!loggedIn" (click)="upvote(event.id)">
+                      <span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
+                    </button>
+                    </div>
+                    <div class="row">
+                      <p class="mx-auto text-primary">{{event.upvote_count}}</p>
+                    </div>
+              </div>
+            </div>
+            <agm-map [latitude]="lat" [longitude]="lng">
+              <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
+            </agm-map>
+              <!-- <input type="file" class="bg-dark text-white" ng2FileSelect [uploader]="uploader"/> -->
+
+            <div class="row pt-2">
+              <div class="col-sm-3" style="width:100px;height:100px" *ngFor="let url of event.event_images">
+                <a href="{{url.file}}"><img src="{{url.file}}" alt="event image"></a>
+              </div>
+            </div>
+            <div *ngIf="loggedIn">
+              <label class="btn btn-outline-primary btn-file">
+                Add Image! <input id="fileSelectInput" type="file" hidden ng2FileSelect [uploader]="uploader">
+              </label>
+              <label class="btn btn-outline-primary" type="button" (click)="uploadImage()">
+                  <span class="oi oi-plus" title="upload" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+          <form *ngIf='loggedIn' #commentForm="ngForm" (submit)="postComment()">
+          <h5>Add comment!</h5>
+          <div class="form-row mb-5 " *ngIf="loggedIn">
+            <div class="col">
+              <input type="text" name="name" [(ngModel)]="comment_name" required class="form-control" placeholder="Display name">
+            </div>
+            <div class="col">
+              <input type="text" name="comment" [(ngModel)]="comment_comment" required class="form-control" placeholder="comment">
+            </div>
+            <button class="btn btn-outline-primary" [disabled]="!commentForm.form.valid" type="submit">Post Comment</button>
+          </div>
+        </form>
+          <div class="row pl-3">
+              <div class="col-sm-5 bg-light rounded p-2 m-1" *ngFor="let comment of event.event_comment">
+                <div class="panel panel-default">
+                <div class="panel-heading">
+                <strong>{{comment.name}}</strong> <span class="text-muted">commented at {{comment.timestamp | date:'short'}}</span>
+                </div>
+                <div class="panel-body">
+                {{comment.comment}}
+                </div><!-- /panel-body -->
+                </div><!-- /panel panel-default -->
+              </div><!-- /col-sm-5 -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm">
+    </div>
   </div>
 </div>

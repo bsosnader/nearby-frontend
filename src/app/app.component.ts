@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   collapsed = true;
@@ -22,14 +22,22 @@ export class AppComponent {
   constructor(private modalService: NgbModal, private authenticationService: AuthenticationService, private sharedService: SharedServiceService, private router: Router) {
     sharedService.onLogin$.subscribe(
       bool => {
+        console.log('here!!!')
         this.loggedIn = bool;
       });
+      sharedService.onList$.subscribe(
+        listview => {
+          this.listview = listview;
+        }
+      )
+
   }
 
   ngOnInit() {
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
+
   }
 
   event_open() {
@@ -49,7 +57,7 @@ export class AppComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.loggedIn = false;
+    //this.loggedIn = false;
     this.sharedService.emitLogin(false);
   }
 
@@ -61,6 +69,10 @@ export class AppComponent {
      console.log(`User searched for: ${searchTerm.value}`)
      this.router.navigate(['list', {term: searchTerm.value}]);
 
+   }
+
+   change_listview(val: boolean) {
+     this.sharedService.emitList(val);
    }
 
 

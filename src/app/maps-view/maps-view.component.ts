@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import {EVENTS} from '../mock-events';
+
+
+interface loc {
+  latitude: string;
+  longitude: string;
+}
 
 @Component({
   selector: 'app-maps-view',
@@ -9,21 +15,19 @@ import {EVENTS} from '../mock-events';
   styleUrls: ['./maps-view.component.css']
 })
 export class MapsViewComponent implements OnInit {
-  events: Event[];
+  @Input() events: Event[];
+  @Input() location: loc;
   constructor(private eventService: EventService) { }
-  lat: number = 40.7959;
-  lng: number = -77.8601;
+  lat: number;
+  lng: number;
   zoom: number = 16;
   ngOnInit() {
-    this.getEvents();
-  }
-  getEvents(): void {
-    this.eventService.getEvents({})
-       .subscribe(events => {
-         this.events = events;
-         console.log(events);
-       });
-    //this.events = EVENTS;
+    if (this.location.latitude) {
+      this.lat = parseFloat(this.location.latitude);
+      this.lng = parseFloat(this.location.longitude);
+    } else {
+
+    }
   }
   convertString(value){
     return parseFloat(value);

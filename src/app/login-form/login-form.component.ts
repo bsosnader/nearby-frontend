@@ -15,11 +15,9 @@ export class LoginFormComponent implements OnInit {
   message = ''
   loggedIn = false;
   ngOnInit() {
-    console.log("Help")
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
       this.sharedService.emitLogin(true);
-      console.log("help")
     }
   }
   submitted = false;

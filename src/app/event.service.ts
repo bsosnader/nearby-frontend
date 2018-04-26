@@ -3,27 +3,52 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
+import { environment } from 'environments/environment';
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { KEY } from './key';
+import { newEvent } from './event-form/newEvent.interface';
 // import { EVENTS } from './mock-events';
 
-
+interface loc {
+  latitude: string;
+  longitude: string;
+}
 @Injectable()
 export class EventService {
-
-  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
+  private KEY = environment.gmap_api_key;
+  private eventUrl = 'https://nearbyapi.gq/';
+  //http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
+
+
 
   private log(message: string) {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: Object, searchTerm?: string): Observable<Event[]> {
-    let url = searchTerm ? this.eventUrl + 'event/list/?search=' + searchTerm: this.eventUrl + 'event/list/';
+  getEvents(data: loc, searchTerm?: string, categories?: string): Observable<Event[]> {
+    let url = this.eventUrl + 'event/list/'
+
+    if(data.latitude && data.longitude) {
+      url += '?lat=' + data.latitude + '&lng=' + data.longitude;
+      if (searchTerm) {
+        url +='&search=' + searchTerm
+      }
+      if (categories) {
+        url += '&categories=' + categories
+      }
+    } else {
+      if(searchTerm && categories) {
+        url += '?search=' + searchTerm + '&categories=' + categories
+      } else if (searchTerm) {
+        url += '?search=' + searchTerm
+      } else if (categories) {
+        url += '?categories=' + categories
+      }
+    }
+
     url = encodeURI(url)
     console.log(url)
     return this.http.get<Event[]>(url)
@@ -34,7 +59,7 @@ export class EventService {
   }
 
   getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(this.eventUrl + 'event/list/' + id);
+    return this.http.get<Event>(this.eventUrl + 'event/' + id + '/');
   }
 
   postUpvote(email: string, event_id: string, token: string): Observable<any> {
@@ -46,13 +71,25 @@ export class EventService {
   }
 
   getLocFromAddr(addr: string): Observable<any> {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + KEY;
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + this.KEY;
     url = encodeURI(url);
     console.log(url);
     return this.http.get<any>(url)
       .pipe(
         catchError(this.handleError('getLocFromAddr',[]))
       );
+  }
+
+  postEvent(event: newEvent, token: string): Observable<any> {
+    const body = JSON.stringify(event);
+    const headers = new HttpHeaders({'Content-Type':'application/json', 'Accept':'application/json', 'Authorization': 'JWT ' + token});
+    return this.http.post<any>(this.eventUrl + 'event/create/', body, {headers: headers});
+  }
+
+  postComment(comment_obj: Object, token: string) {
+    const body = JSON.stringify(comment_obj);
+    const headers = new HttpHeaders({'Content-Type':'application/json', 'Accept':'application/json', 'Authorization': 'JWT ' + token});
+    return this.http.post<any>(this.eventUrl + 'comment/create', body, {headers: headers});
   }
   /**
    * Handle Http operation that failed.

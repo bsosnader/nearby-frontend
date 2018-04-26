@@ -9,10 +9,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" (click)="listview=true">List View</a>
+        <a class="nav-link" (click)="change_listview(true)">List View</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="listview=false">Map View</a>
+        <a class="nav-link" (click)="change_listview(false)">Map View</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -42,23 +42,5 @@
   </div>
 </nav>
 
-<div *ngIf="listview">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-      </div>
-      <div class="col-sm-8">
         <!-- <app-event-list></app-event-list> -->
         <router-outlet></router-outlet>
-      </div>
-      <div class="col-sm">
-        <app-filter></app-filter>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div *ngIf="listview==false">
-  <app-maps-view></app-maps-view>
-</div>

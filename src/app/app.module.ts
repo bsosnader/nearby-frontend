@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { EventService } from './event.service';
 import { HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { Http, HttpModule } from '@angular/http';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { EventListComponent } from './event-list/event-list.component';
@@ -18,8 +19,11 @@ import { AuthenticationService } from './authentication.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SharedServiceService } from './shared-service.service';
+import { AgmDirectionModule } from 'agm-direction';
 
-import{KEY} from'./key';
+import { environment } from 'environments/environment';
+
+
 import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
@@ -38,11 +42,14 @@ import { FilterComponent } from './filter/filter.component';
     HttpClientModule,
     NgbModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: KEY
+      apiKey: environment.gmap_api_key
     }),
+    AgmDirectionModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FileUploadModule
   ],
   providers: [EventService, MessageService, AuthenticationService, SharedServiceService],
   bootstrap: [AppComponent],
