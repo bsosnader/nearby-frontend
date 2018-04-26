@@ -3,9 +3,17 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value=""
+          [(ngModel)]="useFilter" id="filter" name="filter">
+          <label class="form-check-label" for="filter">
+            Filter Events
+          </label>
+        </div>
+        <app-filter (onFiltered)="onFiltered($event)" *ngIf="useFilter"></app-filter>
       </div>
       <div class="col-sm-8">
-				<ngb-alert *ngIf="!notError" (close)="notError = true">You've already upvoted this post!</ngb-alert>
+				<ngb-alert *ngIf="!notError" (close)="notError = true">There was an error upvoting :(</ngb-alert>
 				<ul class="list-group">
 					  <li *ngFor="let event of events; let i = index" class="list-group-item">
 					  	<div class="row">
@@ -29,7 +37,6 @@
 				</ul>
 			</div>
       <div class="col-sm">
-        <app-filter (onFiltered)="onFiltered($event)"></app-filter>
       </div>
     </div>
   </div>

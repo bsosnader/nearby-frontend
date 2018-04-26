@@ -26,6 +26,7 @@ export class EventListComponent implements OnInit {
   searchParam = '';
   notError = true;
   listview: boolean = true;
+  useFilter = false;
   constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
       bool => {
@@ -58,7 +59,6 @@ export class EventListComponent implements OnInit {
   }
 
   getEvents(data: Object, term?: string, cat?: boolean): void {
-    console.log("getEvents in list " + cat)
     this.eventService.getEvents(data, term, cat)
         .subscribe(events => {
           this.events = events;
@@ -71,7 +71,11 @@ export class EventListComponent implements OnInit {
     this.token = JSON.parse(localStorage.getItem('id_token')).token;
     this.eventService.postUpvote(this.email, id, this.token)
       .subscribe(res => {
-        this.events[i].upvote_count += 1;
+        if (res.is_upvote) {
+          this.events[i].upvote_count += 1;
+        } else {
+          this.events[i].upvote_count -= 1;
+        }
       }, error => {
         this.notError = false;
         setTimeout(() => this.notError = true, 5000);

@@ -24,8 +24,6 @@ export class EventService {
   }
 
   getEvents(data: Object, searchTerm?: string, categories?: boolean): Observable<Event[]> {
-    console.log(categories)
-    console.log(searchTerm)
     let url = ''
     if(categories && searchTerm) {
       url = this.eventUrl + 'event/list/?categories=' + searchTerm;
