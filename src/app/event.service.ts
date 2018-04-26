@@ -3,16 +3,15 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-
+import { environment } from 'environments/environment';
 import { MessageService } from './message.service';
 import { Event } from './event';
-import { KEY } from './key';
 // import { EVENTS } from './mock-events';
 
 
 @Injectable()
 export class EventService {
-
+  private KEY = environment.gmap_api_key;
   private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
   //http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/
 
@@ -47,7 +46,7 @@ export class EventService {
   }
 
   getLocFromAddr(addr: string): Observable<any> {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + KEY;
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + this.KEY;
     url = encodeURI(url);
     console.log(url);
     return this.http.get<any>(url)

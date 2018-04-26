@@ -20,7 +20,9 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SharedServiceService } from './shared-service.service';
 import { AgmDirectionModule } from 'agm-direction';
 
-import{KEY} from'./key';
+import { environment } from 'environments/environment';
+
+
 import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
@@ -41,7 +43,7 @@ import { FilterComponent } from './filter/filter.component';
     FormsModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
-      apiKey: KEY
+      apiKey: environment.gmap_api_key
     }),
     AgmDirectionModule,
     HttpModule,
