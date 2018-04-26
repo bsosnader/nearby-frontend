@@ -18,6 +18,7 @@ import { AuthenticationService } from './authentication.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { SharedServiceService } from './shared-service.service';
+import { AgmDirectionModule } from 'agm-direction';
 
 import{KEY} from'./key';
 import { FilterComponent } from './filter/filter.component';
@@ -41,6 +42,7 @@ import { FilterComponent } from './filter/filter.component';
     AgmCoreModule.forRoot({
       apiKey: KEY
     }),
+    AgmDirectionModule,
     HttpModule,
     AppRoutingModule
   ],
