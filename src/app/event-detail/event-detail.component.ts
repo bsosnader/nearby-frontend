@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../event';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../event.service';
+import { SharedServiceService } from '../shared-service.service';
 
 
 @Component({
@@ -18,8 +19,17 @@ export class EventDetailComponent implements OnInit {
   lat: number = 40.7959;
   lng: number = -77.8601;
   origin={ lat: 40.7959, lng: -77.8601 };
+  email: string;
+  token: string;
+  notError = true;
+  loggedIn = false;
 
-  constructor(private route: ActivatedRoute, private eventService: EventService) { }
+  constructor(private route: ActivatedRoute, private eventService: EventService, private sharedService: SharedServiceService) {
+    sharedService.onLogin$.subscribe(
+      bool => {
+        this.loggedIn = bool;
+      });
+   }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -29,6 +39,9 @@ export class EventDetailComponent implements OnInit {
       this.getEvent(String(this.id));
 
    });
+   if(localStorage.getItem('id_token')) {
+     this.loggedIn = true;
+   }
   }
   getEvent(id: string): void {
     this.eventService.getEvent(id)
@@ -49,5 +62,16 @@ export class EventDetailComponent implements OnInit {
   getVals(cats: any) {
     return cats.map(a => a.title)
   }
+  upvote(id: string) {
+    this.email = JSON.parse(localStorage.getItem('id_token')).username;
+    this.token = JSON.parse(localStorage.getItem('id_token')).token;
+    this.eventService.postUpvote(this.email, id, this.token)
+      .subscribe(res => {
+        this.event.upvote_count += 1;
+      }, error => {
+        this.notError = false;
+        setTimeout(() => this.notError = true, 5000);
 
+      });
+  }
 }
