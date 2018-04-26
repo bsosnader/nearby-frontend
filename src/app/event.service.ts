@@ -13,7 +13,7 @@ import { newEvent } from './event-form/newEvent.interface';
 @Injectable()
 export class EventService {
   private KEY = environment.gmap_api_key;
-  private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
+  private eventUrl = 'https://nearbyapi.gq/';
   //http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/
 
   constructor(private http: HttpClient,
