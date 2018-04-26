@@ -9,7 +9,10 @@ import { Event } from './event';
 import { newEvent } from './event-form/newEvent.interface';
 // import { EVENTS } from './mock-events';
 
-
+interface loc {
+  latitude: string;
+  longitude: string;
+}
 @Injectable()
 export class EventService {
   private KEY = environment.gmap_api_key;
@@ -19,21 +22,31 @@ export class EventService {
   constructor(private http: HttpClient,
   private messageService: MessageService) { }
 
+
+
   private log(message: string) {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getEvents(data: Object, searchTerm?: string, categories?: string): Observable<Event[]> {
+  getEvents(data: loc, searchTerm?: string, categories?: string): Observable<Event[]> {
     let url = this.eventUrl + 'event/list/'
-    //if (data.latitude && data.longitude)
 
-
-    if(searchTerm && categories) {
-      url += '?search=' + searchTerm + '&categories=' + categories;
-    } else if(searchTerm) {
-      url += '?search=' + searchTerm;
-    } else if (categories) {
-      url += '?categories=' + categories;
+    if(data.latitude && data.longitude) {
+      url += '?lat=' + data.latitude + '&lng=' + data.longitude;
+      if (searchTerm) {
+        url +='&search=' + searchTerm
+      }
+      if (categories) {
+        url += '&categories=' + categories
+      }
+    } else {
+      if(searchTerm && categories) {
+        url += '?search=' + searchTerm + '&categories=' + categories
+      } else if (searchTerm) {
+        url += '?search=' + searchTerm
+      } else if (categories) {
+        url += '?categories=' + categories
+      }
     }
 
     url = encodeURI(url)

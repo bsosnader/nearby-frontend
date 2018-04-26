@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { account } from '../account.interface';
 import { AuthenticationService } from '../authentication.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
@@ -15,7 +17,7 @@ export class NewAccountComponent implements OnInit {
   submitted = false;
   success_message = '';
   failure_message = '';
-  constructor(private authenticationService: AuthenticationService){ }
+  constructor(private authenticationService: AuthenticationService, public modal: NgbActiveModal){ }
 
   onSubmit() {
     this.submitted = true;
@@ -23,8 +25,9 @@ export class NewAccountComponent implements OnInit {
     this.authenticationService.signup(this.model.email, this.model.password)
             .subscribe(result => {
                 console.log(result);
-                if (result.statusText == "Created") {
+                if (result.status == 201) {
                   this.success_message = "Account Created! You can log in now."
+
                 }
                 if (result.length == 0) {
                   this.failure_message = "Invalid username or password.";

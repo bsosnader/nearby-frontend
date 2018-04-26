@@ -15,15 +15,7 @@ export class MapsViewComponent implements OnInit {
   lng: number = -77.8601;
   zoom: number = 16;
   ngOnInit() {
-    //this.getEvents();
-  }
-  getEvents(): void {
-    this.eventService.getEvents({})
-       .subscribe(events => {
-         this.events = events;
-         console.log(events);
-       });
-    //this.events = EVENTS;
+
   }
   convertString(value){
     return parseFloat(value);

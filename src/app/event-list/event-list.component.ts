@@ -8,7 +8,10 @@ import {Subject} from 'rxjs/Subject';
 import {debounceTime} from 'rxjs/operator/debounceTime';
 
 
-
+interface loc {
+  latitude: string;
+  longitude: string;
+}
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
@@ -64,7 +67,8 @@ export class EventListComponent implements OnInit {
 
   }
 
-  getEvents(data: Object, term?: string, cat?: string): void {
+  getEvents(data: loc, term?: string, cat?: string): void {
+    console.log(data)
     this.eventService.getEvents(data, term, cat)
         .subscribe(events => {
           this.events = events;
@@ -106,7 +110,7 @@ export class EventListComponent implements OnInit {
     console.log(error);
     this.notError = false;
     this.error_message = 'Location could not be automatically found, please enter zipcode'
-    setTimeout(() => this.notError = true, 20000);
+    setTimeout(() => this.notError = true, 6000);
     this.askForZip = true;
   }
 
