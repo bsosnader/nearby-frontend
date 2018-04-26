@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { EventService } from './event.service';
 import { HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { Http, HttpModule } from '@angular/http';
 
@@ -38,6 +38,7 @@ import { FilterComponent } from './filter/filter.component';
     HttpClientModule,
     NgbModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: KEY
     }),

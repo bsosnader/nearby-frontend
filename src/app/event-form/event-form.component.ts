@@ -96,12 +96,45 @@ export class EventFormComponent implements OnInit {
             }
           }
           // will do event post here
+
         } else {
           this.badAddress = true;
         }
       });
   }
 
+  ctrl = new FormControl('', (control: FormControl) => {
+    const value = control.value;
+    let date = new Date();
+    if (!value) {
+      return null;
+    }
+
+    if (value.hour < date.getHours()) {
+      return {tooEarly: true};
+    }
+    if (value.hour == date.getHours() && value.minute < date.getMinutes()) {
+      return {tooEarly: true}
+    }
+
+    return null;
+  });
+  ctrl2 = new FormControl('', (control: FormControl) => {
+    const value = control.value;
+    let date = new Date();
+    if (!value) {
+      return null;
+    }
+
+    if (this.start_time && control.value.hour < this.start_time.hour) {
+      return {tooEarly: true};
+    }
+    if (this.start_time && control.value.minute < this.start_time.minute) {
+      return {tooEarly: true}
+    }
+
+    return null;
+  });
   // TODO remove after testing
   get diagnostic() {
     return JSON.stringify(this.model); }

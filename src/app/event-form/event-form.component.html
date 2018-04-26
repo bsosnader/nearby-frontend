@@ -14,9 +14,10 @@
 // } -->
 <div class="container">
     <h1>New Event</h1>
+    <small class="text-danger">* = required</small>
     <form class='p-3' #newEventForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="title">Event name</label>
+        <label for="title">Event Title*</label>
         <input type="text" class="form-control" id="title" required [(ngModel)]="model.title" name="title">
       </div>
       <div class="form-check">
@@ -27,18 +28,25 @@
       </div>
       <div class="form-group" *ngIf="isPlanned">
         Start Time
-        <ngb-timepicker [(ngModel)]="start_time" name="timepicker_start" [meridian]="true"></ngb-timepicker>
+        <ngb-timepicker [(ngModel)]="start_time" required [formControl]="ctrl" name="timepicker_start" [meridian]="true"></ngb-timepicker>
         End Time
-        <ngb-timepicker [(ngModel)]="end_time" name="timepicker_end" [meridian]="true"></ngb-timepicker>
+        <ngb-timepicker [(ngModel)]="end_time" required [formControl]="ctrl2" name="timepicker_end" [meridian]="true"></ngb-timepicker>
+        <div class="small form-text text-danger" *ngIf="!ctrl.valid">
+          <div *ngIf="ctrl.errors['required']">Select a start time after the current time</div>
+          <div *ngIf="ctrl.errors['tooEarly']">Your start time is too early</div>
+        </div>
+        <div class="small form-text text-danger" *ngIf="!ctrl2.valid">
+          <div *ngIf="ctrl2.errors['required']">Select an end time after the start time</div>
+          <div *ngIf="ctrl2.errors['tooEarly']">Your end time is too early</div>
+        </div>
       </div>
-      <pre>Selected start and end time: {{start_time | json}} | {{end_time | json}}</pre>
       <div class="form-group">
-        <label for="location">Location (Address)</label>
+        <label for="location">Address*</label>
         <input type="text" class="form-control" id="location" required [(ngModel)]="address" name="location">
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" rows="3" [(ngModel)]="model.description" name="description"></textarea>
+        <label for="description">Description*</label>
+        <textarea class="form-control" id="description" required rows="3" [(ngModel)]="model.description" name="description"></textarea>
       </div>
       <div class="form-group">
         <label for="categories">Categories</label>
@@ -92,7 +100,7 @@
 
       </div>
 
-      <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid">Submit</button>
+      <button type="submit" class="btn btn-success" [disabled]="!newEventForm.form.valid || (!ctrl.valid) || !ctrl2.valid">Submit</button>
 
     </form>
     <p *ngIf="badAddress" class="alert alert-danger">Invalid Address! Please try again.</p>
