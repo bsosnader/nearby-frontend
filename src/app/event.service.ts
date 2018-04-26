@@ -11,7 +11,7 @@ import { Event } from './event';
 
 @Injectable()
 export class EventService {
-  private const KEY = environment.gmap_api_key;
+  private KEY = environment.gmap_api_key;
   private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
 
   constructor(private http: HttpClient,
@@ -45,7 +45,7 @@ export class EventService {
   }
 
   getLocFromAddr(addr: string): Observable<any> {
-    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + KEY;
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + this.KEY;
     url = encodeURI(url);
     console.log(url);
     return this.http.get<any>(url)
