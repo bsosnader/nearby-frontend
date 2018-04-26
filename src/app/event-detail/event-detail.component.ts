@@ -13,7 +13,11 @@ export class EventDetailComponent implements OnInit {
   event: Event;
   id: number;
   private sub: any;
-
+  mode: string="WALKING";
+  lat: number = 40.7959;
+  lng: number = -77.8601;
+  origin={ lat: 40.7959, lng: -77.8601 };
+  destination={ lat:40.797938, lng:-77.860283 };
   constructor(private route: ActivatedRoute, private eventService: EventService) { }
 
   ngOnInit() {

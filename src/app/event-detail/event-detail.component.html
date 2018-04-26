@@ -19,6 +19,9 @@
             </div>
       </div>
     </div>
+    <agm-map [latitude]="lat" [longitude]="lng">
+      <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
+    </agm-map>
   </div>
   <form>
   <div class="form-row mb-5">
