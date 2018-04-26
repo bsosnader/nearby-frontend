@@ -10,7 +10,8 @@ import { of }         from 'rxjs/observable/of';
 @Injectable()
 export class AuthenticationService {
     public token: string;
-    private basePath = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com';
+    private basePath = 'https://nearbyapi.gq';
+
 
     constructor(private http: Http, private messageService: MessageService) {
         // set token if saved in local storage

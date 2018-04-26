@@ -27,8 +27,8 @@ export class EventDetailComponent implements OnInit {
   loggedIn = false;
   comment_name: string;
   comment_comment: string;
-  uploader = new FileUploader({ url: 'https://nearbyapi.gq/images/upload',
-                                authToken: JSON.parse(localStorage.getItem('id_token')).token});
+  uploader = new FileUploader({ url: 'https://nearbyapi.gq/image/upload',
+                                authToken: 'JWT ' + JSON.parse(localStorage.getItem('id_token')).token});
 
 
 
