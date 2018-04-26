@@ -125,8 +125,12 @@ export class EventListComponent implements OnInit {
         this.has_position = true;
         this.getEvents(this.location, this.params)
       }
-  });
-}
+    });
+  }
+
+  onBadMapLoc(loc: boolean) {
+    this.errorCallback("bad loc");
+  }
 
 
 }

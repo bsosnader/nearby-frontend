@@ -6,7 +6,10 @@ import { SharedServiceService } from '../shared-service.service';
 import { FileUploader } from 'ng2-file-upload';
 
 
-
+interface loc {
+  latitude: string;
+  longitude: string;
+}
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
@@ -20,7 +23,8 @@ export class EventDetailComponent implements OnInit {
   mode: string="WALKING";
   lat: number = 40.7959;
   lng: number = -77.8601;
-  origin={ lat: 40.7959, lng: -77.8601 };
+  origin={ lat: 40.793574, lng: -77.868595 };
+  location: loc = {latitude: null, longitude: null}
   email: string;
   token: string;
   notError = true;
@@ -41,9 +45,16 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
+      this.location.latitude = params['latitude'];
+      this.location.longitude = params['longitude'];
+      if(this.location.latitude) {
+        this.origin = {lat:parseFloat(this.location.latitude), lng:parseFloat(this.location.longitude)}
+        this.getEvent(String(this.id));
+      } else {
+        this.getLocation()
+      }
       // In a real app: dispatch action to load the details here.
       console.log(this.id)
-      this.getEvent(String(this.id));
 
    });
    if(localStorage.getItem('id_token')) {
@@ -115,6 +126,27 @@ export class EventDetailComponent implements OnInit {
         console.error(error);
       });
   }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this),this.errorCallback.bind(this),{maximumAge:60000, timeout:5000, enableHighAccuracy:false})
+    }
+  }
+
+  setPosition(position) {
+    let x = position.coords;
+     this.location = {latitude: String(x.latitude).substring(0,10), longitude: String(x.longitude).substring(0,10)};
+     this.origin = {lat:parseFloat(this.location.latitude), lng:parseFloat(this.location.longitude)}
+     // basically we only get events when we have location, will have to send events with post and handle on backend
+     //this.getEvents(position.coords);
+     this.getEvent(String(this.id))
+  }
+  errorCallback(error: any) {
+    console.log(error);
+    this.getEvent(String(this.id))
+
+  }
+
 
 
 }
