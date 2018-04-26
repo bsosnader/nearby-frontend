@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [SharedServiceService]
 })
 export class AppComponent {
   collapsed = true;
@@ -23,8 +22,14 @@ export class AppComponent {
   constructor(private modalService: NgbModal, private authenticationService: AuthenticationService, private sharedService: SharedServiceService, private router: Router) {
     sharedService.onLogin$.subscribe(
       bool => {
+        console.log('here!!!')
         this.loggedIn = bool;
       });
+      sharedService.onList$.subscribe(
+        listview => {
+          this.listview = listview;
+        }
+      )
 
   }
 
@@ -32,11 +37,7 @@ export class AppComponent {
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
-    this.sharedService.onList$.subscribe(
-      listview => {
-        this.listview = listview;
-      }
-    )
+
   }
 
   event_open() {
@@ -56,7 +57,7 @@ export class AppComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.loggedIn = false;
+    //this.loggedIn = false;
     this.sharedService.emitLogin(false);
   }
 

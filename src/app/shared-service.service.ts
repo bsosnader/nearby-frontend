@@ -11,6 +11,7 @@ export class SharedServiceService {
     onLogin$ = this.onLoginSource.asObservable();
 
     emitLogin(logged_in: boolean) {
+      console.log("it's being emitted!")
       this.onLoginSource.next(logged_in);
     }
 
