@@ -2,11 +2,14 @@
 
 export interface newEvent {
   title: string;
-  time: string;
-  location: string; // there's probably a type for Location
   description: string;
+  lat: string;
+  long: string;
+  zipcode: string;
+  user_email: string;
+  comments: Object[];
+  upvote_count: number;
+  start_time: string;
+  end_time: string;
   categories: string[];
-  isPlanned: boolean;
-  images: File[];
-
 }
