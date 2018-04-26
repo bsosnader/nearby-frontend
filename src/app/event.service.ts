@@ -14,6 +14,7 @@ import { KEY } from './key';
 export class EventService {
 
   private eventUrl = 'http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/';
+  //http://ec2-18-188-184-129.us-east-2.compute.amazonaws.com/
 
   constructor(private http: HttpClient,
   private messageService: MessageService) { }

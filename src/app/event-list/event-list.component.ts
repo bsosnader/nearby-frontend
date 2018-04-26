@@ -25,6 +25,7 @@ export class EventListComponent implements OnInit {
   token: string;
   searchParam = '';
   notError = true;
+  listview: boolean = true;
   constructor(private eventService: EventService, private sharedService: SharedServiceService, private route: ActivatedRoute) {
     sharedService.onLogin$.subscribe(
       bool => {
@@ -33,7 +34,7 @@ export class EventListComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params['term']) {
         this.getEvents({id:"this is a fake object"}, params['term']);
-      } else {
+      } else if (params['term'] == '') {
         this.getEvents({id:"this is a fake object"})
       }
     });
@@ -49,12 +50,18 @@ export class EventListComponent implements OnInit {
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
+    this.sharedService.onList$.subscribe(
+      listview => {
+        this.listview = listview;
+      });
 
   }
 
   getEvents(data: Object, term?: string): void {
     this.eventService.getEvents(data, term)
-        .subscribe(events => this.events = events);
+        .subscribe(events => {
+          this.events = events;
+        });
   }
 
   upvote(id: string, i: number) {

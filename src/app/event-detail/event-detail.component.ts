@@ -35,8 +35,9 @@ export class EventDetailComponent implements OnInit {
       .subscribe(event => {
         console.log(event);
         this.event = event;
+        console.log(this.event.lat)
+        this.destination = {lat:parseFloat(this.event.lat), lng:parseFloat(this.event.lng)};
         console.log(this.destination)
-        this.destination = {lat:parseFloat(event.lat), lng:parseFloat(event.long)};
         this.lat = (this.origin.lat+this.destination.lat)/2;
         this.lng = (this.origin.lng+this.destination.lat)/2;
         // console.log(this.destination);

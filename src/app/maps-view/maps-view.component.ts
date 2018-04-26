@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import {EVENTS} from '../mock-events';
@@ -9,13 +9,13 @@ import {EVENTS} from '../mock-events';
   styleUrls: ['./maps-view.component.css']
 })
 export class MapsViewComponent implements OnInit {
-  events: Event[];
+  @Input() events: Event[];
   constructor(private eventService: EventService) { }
   lat: number = 40.7959;
   lng: number = -77.8601;
   zoom: number = 16;
   ngOnInit() {
-    this.getEvents();
+    //this.getEvents();
   }
   getEvents(): void {
     this.eventService.getEvents({})

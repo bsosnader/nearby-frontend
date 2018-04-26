@@ -1,59 +1,72 @@
-<div *ngIf="event">
+<div>
   <div class="container">
-    <div class='jumbotron'>
-      <div class="row">
-        <div class="col-sm-11">
-          <h1>{{event.title}}</h1>
-          <small>Post Time: {{event.time_stamp | date:'shortTime'}}</small>
-          <p class='lead'>{{event.description}}</p>
-          <small>tags: {{getVals(event.categories)}}</small>
-        </div>
-        <div class="col-sm-1">
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm-8">
+        <div *ngIf="event">
+          <div class="container">
+            <div class='jumbotron'>
+              <div class="row">
+                <div class="col-sm-11">
+                  <h1>{{event.title}}</h1>
+                  <small>Post Time: {{event.time_stamp | date:'shortTime'}}</small>
+                  <p class='lead'>{{event.description}}</p>
+                  <small>tags: {{getVals(event.categories)}}</small>
+                </div>
+                <div class="col-sm-1">
+                  <div class="row">
+                    <button class="btn btn-sm btn-outline-primary col mb-3" type="button"  (click)="upvote(event.id, i)">
+                      <span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
+                    </button>
+                    </div>
+                    <div class="row">
+                      <p class="mx-auto text-primary">{{event.upvote_count}}</p>
+                    </div>
+              </div>
+            </div>
+            <agm-map [latitude]="lat" [longitude]="lng">
+              <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
+            </agm-map>
+          </div>
+          <form>
+          <div class="form-row mb-5">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Display name">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="comment">
+            </div>
+            <button class="btn btn-outline-primary">Post Comment</button>
+          </div>
+        </form>
           <div class="row">
-            <button class="btn btn-sm btn-outline-primary col mb-3" type="button"  (click)="upvote(event.id, i)">
-              <span class="oi oi-arrow-circle-top" title="upvote up" aria-hidden="true"></span>
-            </button>
-            </div>
-            <div class="row">
-              <p class="mx-auto text-primary">{{event.upvote_count}}</p>
-            </div>
+              <div class="col-sm-5">
+              <div class="panel panel-default">
+              <div class="panel-heading">
+              <strong>John H</strong> <span class="text-muted">commented</span>
+              </div>
+              <div class="panel-body">
+              Amazing!
+              </div><!-- /panel-body -->
+              </div><!-- /panel panel-default -->
+              </div><!-- /col-sm-5 -->
+              <div class="col-sm-5">
+              <div class="panel panel-default">
+              <div class="panel-heading">
+              <strong>Rob</strong> <span class="text-muted">commented</span>
+              </div>
+              <div class="panel-body">
+              They were out of thin mints when I went :(
+              </div><!-- /panel-body -->
+              </div><!-- /panel panel-default -->
+              </div><!-- /col-sm-5 -->
+          </div>
+        </div>
       </div>
+
     </div>
-    <agm-map [latitude]="lat" [longitude]="lng">
-      <agm-direction [origin]="origin" [destination]="destination" [travelMode]="mode"></agm-direction>
-    </agm-map>
-  </div>
-  <form>
-  <div class="form-row mb-5">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Display name">
+    <div class="col-sm">
     </div>
-    <div class="col">
-      <input type="text" class="form-control" placeholder="comment">
-    </div>
-    <button class="btn btn-outline-primary">Post Comment</button>
-  </div>
-</form>
-  <div class="row">
-      <div class="col-sm-5">
-      <div class="panel panel-default">
-      <div class="panel-heading">
-      <strong>John H</strong> <span class="text-muted">commented</span>
-      </div>
-      <div class="panel-body">
-      Amazing!
-      </div><!-- /panel-body -->
-      </div><!-- /panel panel-default -->
-      </div><!-- /col-sm-5 -->
-      <div class="col-sm-5">
-      <div class="panel panel-default">
-      <div class="panel-heading">
-      <strong>Rob</strong> <span class="text-muted">commented</span>
-      </div>
-      <div class="panel-body">
-      They were out of thin mints when I went :(
-      </div><!-- /panel-body -->
-      </div><!-- /panel panel-default -->
-      </div><!-- /col-sm-5 -->
   </div>
 </div>

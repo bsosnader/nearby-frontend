@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [SharedServiceService]
 })
 export class AppComponent {
   collapsed = true;
@@ -24,12 +25,18 @@ export class AppComponent {
       bool => {
         this.loggedIn = bool;
       });
+
   }
 
   ngOnInit() {
     if(localStorage.getItem('id_token')) {
       this.loggedIn = true;
     }
+    this.sharedService.onList$.subscribe(
+      listview => {
+        this.listview = listview;
+      }
+    )
   }
 
   event_open() {
@@ -61,6 +68,10 @@ export class AppComponent {
      console.log(`User searched for: ${searchTerm.value}`)
      this.router.navigate(['list', {term: searchTerm.value}]);
 
+   }
+
+   change_listview(val: boolean) {
+     this.sharedService.emitList(val);
    }
 
 
