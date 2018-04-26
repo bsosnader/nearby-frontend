@@ -62,11 +62,7 @@ export class AuthenticationService {
       let options = new RequestOptions({
         headers: headers
       });
-      return this.http.post(this.basePath + '/signup/', JSON.stringify({email: email, password: password}), options)
-      .pipe(
-        tap(heroes => this.log(`made account`)),
-        catchError(this.handleError('signup', []))
-      );
+      return this.http.post(this.basePath + '/signup/', JSON.stringify({email: email, password: password}), options);
 
     }
  

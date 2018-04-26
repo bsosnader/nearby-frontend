@@ -30,10 +30,16 @@ export class NewAccountComponent implements OnInit {
 
                 }
                 if (result.length == 0) {
-                  this.failure_message = "Invalid username or password.";
+                  this.failure_message = "Invalid email or password.";
                 }
-            }, (errror: any) => {
-              this.failure_message = "Invalid username or password.";
+            }, (error: any) => {
+              console.error(error)
+              if (error.status == 500) {
+                this.failure_message = "Account with that email already exists";
+
+              } else {
+                this.failure_message = "Invalid email or password.";
+              }
             });
 
   }
