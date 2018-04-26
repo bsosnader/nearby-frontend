@@ -13,7 +13,20 @@
         <app-filter (onFiltered)="onFiltered($event)" *ngIf="useFilter"></app-filter>
       </div>
       <div class="col-sm-8">
-				<ngb-alert *ngIf="!notError" (close)="notError = true">There was an error upvoting :(</ngb-alert>
+        <form class="p-2" *ngIf="askForZip" #zipForm="ngForm" (submit)="getLocFromZip()">
+          <div class="form-row">
+            <div class="col-sm-6">
+            <p>Please enter your zip code.</p>
+          </div>
+            <div class="col-sm-3">
+              <input type="text" required [(ngModel)]="zipcode" class="form-control" name="zip" placeholder="Zip code">
+            </div>
+            <div class="col-sm-3">
+            <button type="submit" [disabled]="!zipForm.form.valid"class="btn btn-primary">Go!</button>
+          </div>
+          </div>
+        </form>
+				<ngb-alert *ngIf="!notError" (close)="notError = true">{{error_message}}</ngb-alert>
 				<ul class="list-group">
 					  <li *ngFor="let event of events; let i = index" class="list-group-item">
 					  	<div class="row">

@@ -25,6 +25,7 @@ export class EventService {
 
   getEvents(data: Object, searchTerm?: string, categories?: boolean): Observable<Event[]> {
     let url = ''
+    //if (data.latitude && data.longitude)
     if(categories && searchTerm) {
       url = this.eventUrl + 'event/list/?categories=' + searchTerm;
     } else {
