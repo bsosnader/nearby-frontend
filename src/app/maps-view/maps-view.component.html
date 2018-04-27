@@ -1,6 +1,6 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-<agm-marker [latitude]="lat" [longitude]="lng"[markerClickable]="true" [openInfoWindow]="true">
-  <agm-info-window>
+<agm-marker [latitude]="lat" [longitude]="lng" [openInfoWindow]="true">
+  <agm-info-window [isOpen]="true">
     <strong>You are here!</strong>
   </agm-info-window>
 </agm-marker>
